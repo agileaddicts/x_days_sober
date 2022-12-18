@@ -1,0 +1,9 @@
+version: "3.1"
+services:
+  postgres:
+    container_name: x_days_sober-postgres
+    image: postgres:14.4-bullseye
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
