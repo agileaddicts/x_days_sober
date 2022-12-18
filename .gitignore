@@ -32,3 +32,4 @@ x_days_sober-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.elixir_ls/
