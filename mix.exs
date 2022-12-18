@@ -50,7 +50,8 @@ defmodule XDaysSober.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.7"},
-      {:oban, "~> 2.13"}
+      {:oban, "~> 2.13"},
+      {:finch, "~> 0.14.0"}
     ]
   end
 

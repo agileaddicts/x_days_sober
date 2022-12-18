@@ -18,7 +18,8 @@ defmodule XDaysSober.Application do
       XDaysSoberWeb.Endpoint,
       # Start a worker by calling: XDaysSober.Worker.start_link(arg)
       # {XDaysSober.Worker, arg}
-      {Oban, Application.fetch_env!(:x_days_sober, Oban)}
+      {Oban, Application.fetch_env!(:x_days_sober, Oban)},
+      {Finch, name: Swoosh.Finch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

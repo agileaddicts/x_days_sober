@@ -27,7 +27,7 @@ defmodule XDaysSober.EmailWorker do
       if days > 0 do
         new()
         |> to({name, person.email})
-        |> from({"X Days Sober", "steps@xdayssober.com"})
+        |> from({"X Days Sober", "xdayssober@boo.sh"})
         |> subject("🎉 #{day_text} sober 🎉")
         |> text_body(
           "Hey #{name},\n\nyou did it! You are #{day_text} sober! You have every reason to be proud about this number.\n\nUntil tomorrow,\nSebastian"

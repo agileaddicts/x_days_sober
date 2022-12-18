@@ -27,7 +27,7 @@ config :x_days_sober, XDaysSoberWeb.Endpoint,
 config :x_days_sober, XDaysSober.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
+config :swoosh, :api_client, Swoosh.ApiClient.Finch
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -55,7 +55,7 @@ config :x_days_sober, Oban,
     Oban.Plugins.Pruner,
     {Oban.Plugins.Cron,
      crontab: [
-       {"0 5 * * *", XDaysSober.EmailWorker}
+       {"0 4 * * *", XDaysSober.EmailWorker}
      ]}
   ],
   queues: [default: 10]
