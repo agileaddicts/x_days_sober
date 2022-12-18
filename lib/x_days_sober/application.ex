@@ -15,9 +15,10 @@ defmodule XDaysSober.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: XDaysSober.PubSub},
       # Start the Endpoint (http/https)
-      XDaysSoberWeb.Endpoint
+      XDaysSoberWeb.Endpoint,
       # Start a worker by calling: XDaysSober.Worker.start_link(arg)
       # {XDaysSober.Worker, arg}
+      {Oban, Application.fetch_env!(:x_days_sober, Oban)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
