@@ -6,6 +6,6 @@ The application name on fly.io is `xdayssober`. It is connected to the `lifttrib
 
 To connect to the staging datbase, use `fly proxy 6543:5432 -a lifttribe-staging-pg` and then connect to Postges locally using port 6543.
 
-Connect to a remote console using `fly ssh console --config ./fly.toml` and inside the running container, use `./app/bin/x_days_sober remote`.
+Connect to a remote console using `fly ssh console` and inside the running container, use `./app/bin/x_days_sober remote`.
 
 Manual deployment can be done via `fly deploy --remote-only`
