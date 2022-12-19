@@ -63,13 +63,13 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  # postmark_api_key =
-  #   System.get_env("POSTMARK_API_KEY") ||
-  #     raise """
-  #     environment variable POSTMARK_API_KEY is missing.
-  #     """
+  postmark_api_key =
+    System.get_env("POSTMARK_API_KEY") ||
+      raise """
+      environment variable POSTMARK_API_KEY is missing.
+      """
 
-  # config :x_days_sober, XDaysSober.Mailer, api_key: postmark_api_key
+  config :x_days_sober, XDaysSober.Mailer, api_key: postmark_api_key
 
   # ## Configuring the mailer
   #
