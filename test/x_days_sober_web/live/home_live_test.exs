@@ -1,4 +1,4 @@
-defmodule XDaysSoberWeb.PageControllerTest do
+defmodule XDaysSoberWeb.HomeLiveTest do
   use XDaysSoberWeb.ConnCase
 
   test "GET /", %{conn: conn} do
