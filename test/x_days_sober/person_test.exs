@@ -6,10 +6,16 @@ defmodule XDaysSober.PersonTest do
 
   describe "create/1" do
     test "correct insert with unique email and correct timezone" do
-      {:ok, person} = Person.create("test@xdayssober.local", "Europe/Vienna")
+      email = "test@xdayssober.local"
+      timezone = "Europe/Vienna"
+      {:ok, person} = Person.create(email, timezone)
 
       assert person.id
       assert person.uuid
+      assert person.email == email
+      refute person.name
+      assert person.timezone == timezone
+      assert person.sober_since
 
       assert Repo.get(Person, person.id)
     end
@@ -18,7 +24,7 @@ defmodule XDaysSober.PersonTest do
     test "error with duplicated email" do
     end
 
-    test "correct insert with unique email and wrong timezone" do
+    test "error with unique email and wrong timezone" do
       {:error, changeset} = Person.create("test@xdayssober.local", "wrong")
 
       refute changeset.valid?

@@ -1,1 +1,17 @@
 <h1>X Days Sober</h1>
+
+<.form :let={f} for={@changeset} phx-submit="save">
+  <%= label f, :email %>
+  <%= text_input f, :email, type: :email, required: true %>
+  <%= error_tag f, :email %>
+
+  <%= text_input f, :timezone, type: :hidden %>
+
+  <%= submit "I am staying sober!" %>
+</.form>
+
+<script>
+  window.onload = function(){
+    document.getElementById("person_timezone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  }
+</script>

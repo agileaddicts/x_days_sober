@@ -45,7 +45,7 @@ defmodule XDaysSoberWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {XDaysSoberWeb.LayoutView, "live.html"}
+        layout: {XDaysSoberWeb.LayoutView, :live}
 
       unquote(view_helpers())
     end
