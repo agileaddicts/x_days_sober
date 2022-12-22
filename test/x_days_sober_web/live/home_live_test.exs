@@ -2,6 +2,7 @@ defmodule XDaysSoberWeb.HomeLiveTest do
   use XDaysSoberWeb.ConnCase
 
   import Phoenix.LiveViewTest
+  import XDaysSober.Factory
 
   test "visitor can access homepage", %{conn: conn} do
     {:ok, _view, html} = live(conn, "/")
@@ -21,7 +22,16 @@ defmodule XDaysSoberWeb.HomeLiveTest do
     assert html =~ "X Days Sober"
   end
 
-  @tag :skip
-  test "potential user gets error message when signing up with duplicated email", %{conn: _conn} do
+  test "potential user gets error message when signing up with duplicated email", %{conn: conn} do
+    person = insert!(:person)
+
+    {:ok, view, _html} = live(conn, "/")
+
+    rendered =
+      view
+      |> form("form", person: %{email: person.email})
+      |> render_submit()
+
+    assert rendered =~ "has already been taken"
   end
 end

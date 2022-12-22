@@ -1,6 +1,8 @@
 defmodule XDaysSober.PersonRepoTest do
   use XDaysSober.DataCase, async: true
 
+  import XDaysSober.Factory
+
   alias Ecto.UUID
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
@@ -22,8 +24,14 @@ defmodule XDaysSober.PersonRepoTest do
       assert Repo.get(Person, person.id)
     end
 
-    @tag :skip
     test "error with duplicated email" do
+      person = insert!(:person)
+
+      {:error, changeset} = PersonRepo.create(person.email, "Europe/Vienna")
+
+      refute changeset.valid?
+      assert length(changeset.errors) == 1
+      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :email end)
     end
 
     test "error with unique email and wrong timezone" do
@@ -36,8 +44,10 @@ defmodule XDaysSober.PersonRepoTest do
   end
 
   describe "get_by_uuid/1" do
-    @tag :skip
     test "correct return with existing uuid" do
+      person = insert!(:person)
+
+      assert PersonRepo.get_by_uuid(person.uuid)
     end
 
     test "correct nil return with non-existing uuid" do
