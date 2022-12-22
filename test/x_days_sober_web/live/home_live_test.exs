@@ -3,13 +3,13 @@ defmodule XDaysSoberWeb.HomeLiveTest do
 
   import Phoenix.LiveViewTest
 
-  test "user can access homepage", %{conn: conn} do
+  test "visitor can access homepage", %{conn: conn} do
     {:ok, _view, html} = live(conn, "/")
 
     assert html =~ "X Days Sober"
   end
 
-  test "user can register using unique email", %{conn: conn} do
+  test "potential user can register using unique email", %{conn: conn} do
     {:ok, view, _html} = live(conn, "/")
 
     {:ok, _view, html} =
@@ -22,6 +22,6 @@ defmodule XDaysSoberWeb.HomeLiveTest do
   end
 
   @tag :skip
-  test "user gets error message when signing up with duplicated email", %{conn: _conn} do
+  test "potential user gets error message when signing up with duplicated email", %{conn: _conn} do
   end
 end

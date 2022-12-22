@@ -19,6 +19,8 @@ defmodule XDaysSober.PersonRepo do
 
   def get_by_uuid(uuid) do
     Repo.get_by(Person, uuid: uuid)
+  rescue
+    Ecto.Query.CastError -> nil
   end
 
   defp generate_today_date(timezone) do

@@ -96,6 +96,7 @@ defmodule XDaysSoberWeb do
       import Phoenix.View
 
       import XDaysSoberWeb.ErrorHelpers
+      import XDaysSoberWeb.Helpers
       import XDaysSoberWeb.Gettext
       alias XDaysSoberWeb.Router.Helpers, as: Routes
     end

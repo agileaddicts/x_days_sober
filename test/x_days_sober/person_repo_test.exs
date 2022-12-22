@@ -40,8 +40,12 @@ defmodule XDaysSober.PersonRepoTest do
     test "correct return with existing uuid" do
     end
 
-    test "correct error return with non-existing uuid" do
+    test "correct nil return with non-existing uuid" do
       refute PersonRepo.get_by_uuid(UUID.generate())
+    end
+
+    test "correct nil return with non uuid" do
+      refute PersonRepo.get_by_uuid("wrong")
     end
   end
 end
