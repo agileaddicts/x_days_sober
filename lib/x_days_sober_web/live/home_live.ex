@@ -2,6 +2,7 @@ defmodule XDaysSoberWeb.HomeLive do
   use XDaysSoberWeb, :live_view
 
   alias XDaysSober.Person
+  alias XDaysSober.PersonRepo
   alias Timex.Timezone
 
   def mount(_params, _session, socket) do
@@ -13,7 +14,7 @@ defmodule XDaysSoberWeb.HomeLive do
     validated_timezone =
       if Timezone.exists?(params["timezone"]), do: params["timezone"], else: "Etc/UTC"
 
-    case Person.create(params["email"], validated_timezone) do
+    case PersonRepo.create(params["email"], validated_timezone) do
       {:ok, person} ->
         {:noreply, push_redirect(socket, to: "/p/#{person.uuid}")}
 

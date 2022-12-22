@@ -1,14 +1,15 @@
-defmodule XDaysSober.PersonTest do
+defmodule XDaysSober.PersonRepoTest do
   use XDaysSober.DataCase, async: true
 
   alias XDaysSober.Person
+  alias XDaysSober.PersonRepo
   alias XDaysSober.Repo
 
   describe "create/1" do
     test "correct insert with unique email and correct timezone" do
       email = "test@xdayssober.local"
       timezone = "Europe/Vienna"
-      {:ok, person} = Person.create(email, timezone)
+      {:ok, person} = PersonRepo.create(email, timezone)
 
       assert person.id
       assert person.uuid
@@ -25,7 +26,7 @@ defmodule XDaysSober.PersonTest do
     end
 
     test "error with unique email and wrong timezone" do
-      {:error, changeset} = Person.create("test@xdayssober.local", "wrong")
+      {:error, changeset} = PersonRepo.create("test@xdayssober.local", "wrong")
 
       refute changeset.valid?
       assert length(changeset.errors) == 1

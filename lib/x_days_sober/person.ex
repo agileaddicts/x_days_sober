@@ -4,10 +4,7 @@ defmodule XDaysSober.Person do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Ecto.UUID
   alias Timex.Timezone
-  alias XDaysSober.Person
-  alias XDaysSober.Repo
 
   schema "persons" do
     field :uuid, :binary_id
@@ -25,27 +22,6 @@ defmodule XDaysSober.Person do
     |> validate_required([:uuid, :email, :timezone, :sober_since])
     |> unique_constraint(:email, name: :persons_email_index)
     |> validate_timezone()
-  end
-
-  def create(email, timezone) do
-    %Person{}
-    |> changeset(%{
-      uuid: UUID.generate(),
-      email: email,
-      timezone: timezone,
-      sober_since: generate_today_date(timezone)
-    })
-    |> Repo.insert()
-  end
-
-  defp generate_today_date(timezone) do
-    if Timezone.exists?(timezone) do
-      timezone
-      |> Timex.now()
-      |> Timex.to_date()
-    else
-      Timex.to_date(Timex.now())
-    end
   end
 
   defp validate_timezone(changeset) do

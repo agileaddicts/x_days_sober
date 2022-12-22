@@ -20,4 +20,8 @@ defmodule XDaysSoberWeb.HomeLiveTest do
 
     assert html =~ "X Days Sober"
   end
+
+  @tag :skip
+  test "user gets error message when signing up with duplicated email", %{conn: _conn} do
+  end
 end
