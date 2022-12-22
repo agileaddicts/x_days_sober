@@ -17,6 +17,10 @@ defmodule XDaysSober.PersonRepo do
     |> Repo.insert()
   end
 
+  def get_by_uuid(uuid) do
+    Repo.get_by(Person, uuid: uuid)
+  end
+
   defp generate_today_date(timezone) do
     if Timezone.exists?(timezone) do
       timezone

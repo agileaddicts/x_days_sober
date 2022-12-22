@@ -1,6 +1,7 @@
 defmodule XDaysSober.PersonRepoTest do
   use XDaysSober.DataCase, async: true
 
+  alias Ecto.UUID
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
   alias XDaysSober.Repo
@@ -31,6 +32,16 @@ defmodule XDaysSober.PersonRepoTest do
       refute changeset.valid?
       assert length(changeset.errors) == 1
       assert Enum.any?(changeset.errors, fn {field, _error} -> field == :timezone end)
+    end
+  end
+
+  describe "get_by_uuid/1" do
+    @tag :skip
+    test "correct return with existing uuid" do
+    end
+
+    test "correct error return with non-existing uuid" do
+      refute PersonRepo.get_by_uuid(UUID.generate())
     end
   end
 end
