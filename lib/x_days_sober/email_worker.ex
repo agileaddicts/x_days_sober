@@ -6,6 +6,9 @@ defmodule XDaysSober.EmailWorker do
   alias XDaysSober.Mailer
   alias XDaysSober.Person
   alias XDaysSober.Repo
+  alias XDaysSoberWeb.Endpoint
+  alias XDaysSoberWeb.PersonLive
+  alias XDaysSoberWeb.Router.Helpers
 
   @impl Oban.Worker
   def perform(_) do
@@ -25,12 +28,20 @@ defmodule XDaysSober.EmailWorker do
             days -> "#{days} days"
           end
 
+        url =
+          Endpoint
+          |> Helpers.live_path(
+            PersonLive,
+            person.uuid
+          )
+          |> build_url()
+
         new()
         |> to({name, person.email})
         |> from({"X Days Sober", "xdayssober@boo.sh"})
         |> subject("🎉 #{day_text} sober 🎉")
         |> text_body(
-          "Hey #{name},\n\nyou did it! You are #{day_text} sober! You have every reason to be proud about this number.\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{build_url("/p/#{person.uuid}")}"
+          "Hey #{name},\n\nyou did it! You are #{day_text} sober! You have every reason to be proud about this number.\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{url}"
         )
         |> Mailer.deliver()
       end

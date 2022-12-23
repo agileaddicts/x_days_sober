@@ -3,15 +3,17 @@ defmodule XDaysSoberWeb.HomeLiveTest do
 
   import Phoenix.LiveViewTest
   import XDaysSober.Factory
+  alias XDaysSoberWeb.Router.Helpers
+  alias XDaysSoberWeb.HomeLive
 
   test "visitor can access homepage", %{conn: conn} do
-    {:ok, _view, html} = live(conn, "/")
+    {:ok, _view, html} = live(conn, home_path(conn))
 
     assert html =~ "X Days Sober"
   end
 
   test "potential user can register using unique email", %{conn: conn} do
-    {:ok, view, _html} = live(conn, "/")
+    {:ok, view, _html} = live(conn, home_path(conn))
 
     {:ok, _view, html} =
       view
@@ -25,7 +27,7 @@ defmodule XDaysSoberWeb.HomeLiveTest do
   test "potential user gets error message when signing up with duplicated email", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, view, _html} = live(conn, "/")
+    {:ok, view, _html} = live(conn, home_path(conn))
 
     rendered =
       view
@@ -33,5 +35,12 @@ defmodule XDaysSoberWeb.HomeLiveTest do
       |> render_submit()
 
     assert rendered =~ "has already been taken"
+  end
+
+  defp home_path(conn) do
+    Helpers.live_path(
+      conn,
+      HomeLive
+    )
   end
 end

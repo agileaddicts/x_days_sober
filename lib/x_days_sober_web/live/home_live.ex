@@ -1,9 +1,11 @@
 defmodule XDaysSoberWeb.HomeLive do
   use XDaysSoberWeb, :live_view
 
+  alias Timex.Timezone
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
-  alias Timex.Timezone
+  alias XDaysSoberWeb.Router.Helpers
+  alias XDaysSoberWeb.PersonLive
 
   def mount(_params, _session, socket) do
     socket = assign(socket, changeset: Person.changeset(%Person{}, %{}))
@@ -16,7 +18,15 @@ defmodule XDaysSoberWeb.HomeLive do
 
     case PersonRepo.create(params["email"], validated_timezone) do
       {:ok, person} ->
-        {:noreply, push_redirect(socket, to: "/p/#{person.uuid}")}
+        {:noreply,
+         push_redirect(socket,
+           to:
+             Helpers.live_path(
+               socket,
+               PersonLive,
+               person.uuid
+             )
+         )}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
