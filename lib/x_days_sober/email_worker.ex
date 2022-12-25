@@ -27,11 +27,7 @@ defmodule XDaysSober.EmailWorker do
     for person <- Repo.all(Person) do
       name = person.name || person.email
 
-      days =
-        person.timezone
-        |> Timex.now()
-        |> Timex.to_date()
-        |> Timex.diff(person.sober_since, :days)
+      days = Person.calculate_sober_days(person)
 
       if days > 0 do
         url =

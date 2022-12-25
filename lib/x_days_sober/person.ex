@@ -5,6 +5,7 @@ defmodule XDaysSober.Person do
   import Ecto.Changeset
 
   alias Timex.Timezone
+  alias XDaysSober.Person
 
   schema "persons" do
     field :uuid, :binary_id
@@ -22,6 +23,13 @@ defmodule XDaysSober.Person do
     |> validate_required([:uuid, :email, :timezone, :sober_since])
     |> unique_constraint(:email, name: :persons_email_index)
     |> validate_timezone()
+  end
+
+  def calculate_sober_days(%Person{} = person) do
+    person.timezone
+    |> Timex.now()
+    |> Timex.to_date()
+    |> Timex.diff(person.sober_since, :days)
   end
 
   defp validate_timezone(changeset) do

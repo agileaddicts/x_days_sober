@@ -1,13 +1,14 @@
 defmodule XDaysSoberWeb.PersonLive do
   use XDaysSoberWeb, :live_view
 
+  alias XDaysSober.Person
   alias XDaysSober.PersonRepo
   alias XDaysSoberWeb.Router.Helpers
   alias XDaysSoberWeb.HomeLive
 
   def mount(params, _session, socket) do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
-         %XDaysSober.Person{} = person <- PersonRepo.get_by_uuid(uuid) do
+         %Person{} = person <- PersonRepo.get_by_uuid(uuid) do
       socket
       |> assign(person: person)
       |> ok()
@@ -23,4 +24,6 @@ defmodule XDaysSoberWeb.PersonLive do
          )}
     end
   end
+
+  defp sober_days(%Person{} = person), do: Person.calculate_sober_days(person)
 end
