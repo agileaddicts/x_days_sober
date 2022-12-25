@@ -25,5 +25,10 @@ defmodule XDaysSoberWeb.PersonLive do
     end
   end
 
-  defp sober_days(%Person{} = person), do: Person.calculate_sober_days(person)
+  defp sober_days(%Person{} = person) do
+    case Person.calculate_sober_days(person) do
+      1 -> "1 day"
+      days -> "#{days} days"
+    end
+  end
 end
