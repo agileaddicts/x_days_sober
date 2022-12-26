@@ -6,6 +6,7 @@ defmodule XDaysSober.Person do
 
   alias Timex.Timezone
   alias XDaysSober.Person
+  alias XDaysSober.PersonalAffirmation
 
   schema "persons" do
     field :uuid, :binary_id
@@ -13,6 +14,8 @@ defmodule XDaysSober.Person do
     field :name, :string
     field :timezone, :string
     field :sober_since, :date
+
+    has_many :personal_affirmations, PersonalAffirmation
 
     timestamps()
   end
