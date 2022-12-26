@@ -3,6 +3,8 @@ defmodule XDaysSober.Factory do
 
   alias Ecto.UUID
   alias Faker.Internet
+  alias Faker.Lorem
+  alias Timex.Duration
   alias XDaysSober.Person
   alias XDaysSober.PersonalAffirmation
   alias XDaysSober.Repo
@@ -24,7 +26,7 @@ defmodule XDaysSober.Factory do
       uuid: UUID.generate(),
       person: build(:person),
       day: 1,
-      text: Faker.Lorem.sentence(5..10),
+      text: Lorem.sentence(5..10),
       approved: false
     }
   end
@@ -37,5 +39,24 @@ defmodule XDaysSober.Factory do
 
   def insert!(factory_name, attributes \\ []) do
     factory_name |> build(attributes) |> Repo.insert!()
+  end
+
+  def build_person_with_days_sober(attributes, days_sober) do
+    timezone = Map.get(attributes, :timezone, "Europe/Vienna")
+
+    sober_since =
+      timezone
+      |> Timex.now()
+      # credo:disable-for-next-line Credo.Check.Readability.NestedFunctionCalls
+      |> Timex.subtract(Duration.from_days(days_sober))
+      |> Timex.to_date()
+
+    build(:person, Map.put(attributes, :sober_since, sober_since))
+  end
+
+  def insert_person_with_days_sober(attributes, days_sober) do
+    person = build_person_with_days_sober(attributes, days_sober)
+
+    Repo.insert!(person)
   end
 end

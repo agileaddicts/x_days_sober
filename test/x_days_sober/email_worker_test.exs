@@ -5,7 +5,6 @@ defmodule XDaysSober.EmailWorkerTest do
   import Swoosh.TestAssertions
   import XDaysSober.Factory
 
-  alias Timex.Duration
   alias XDaysSober.EmailWorker
 
   describe "perform/1" do
@@ -22,14 +21,7 @@ defmodule XDaysSober.EmailWorkerTest do
     end
 
     test "executes job and does send one email to person" do
-      insert!(:person,
-        sober_since:
-          "Europe/Vienna"
-          |> Timex.now()
-          # credo:disable-for-next-line Credo.Check.Readability.NestedFunctionCalls
-          |> Timex.subtract(Duration.from_days(1))
-          |> Timex.to_date()
-      )
+      insert_person_with_days_sober(%{}, 1)
 
       assert perform_job(EmailWorker, %{}) == :ok
       assert_email_sent()

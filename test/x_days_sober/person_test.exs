@@ -1,11 +1,12 @@
 defmodule XDaysSober.PersonTest do
   use ExUnit.Case, async: true
 
-  alias Timex.Duration
+  import XDaysSober.Factory
+
   alias XDaysSober.Person
 
   describe "changeset/2" do
-    # Has to be implemented
+    # Has to be implement
     @tag :skip
     test "valid changeset" do
     end
@@ -15,13 +16,7 @@ defmodule XDaysSober.PersonTest do
     test "correct calculation with new Person" do
       timezone = "Etc/UTC"
 
-      person = %Person{
-        timezone: timezone,
-        sober_since:
-          timezone
-          |> Timex.now()
-          |> Timex.to_date()
-      }
+      person = build_person_with_days_sober(%{timezone: timezone}, 0)
 
       assert Person.calculate_sober_days(person) == 0
     end
@@ -29,15 +24,7 @@ defmodule XDaysSober.PersonTest do
     test "correct calculation with Person" do
       timezone = "Etc/UTC"
 
-      person = %Person{
-        timezone: timezone,
-        sober_since:
-          timezone
-          |> Timex.now()
-          # credo:disable-for-next-line Credo.Check.Readability.NestedFunctionCalls
-          |> Timex.subtract(Duration.from_days(5))
-          |> Timex.to_date()
-      }
+      person = build_person_with_days_sober(%{timezone: timezone}, 5)
 
       assert Person.calculate_sober_days(person) == 5
     end
