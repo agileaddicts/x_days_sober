@@ -5,6 +5,7 @@ defmodule XDaysSober.EmailWorkerTest do
   import Swoosh.TestAssertions
   import XDaysSober.Factory
 
+  alias Timex.Duration
   alias XDaysSober.EmailWorker
 
   describe "perform/1" do
@@ -25,7 +26,8 @@ defmodule XDaysSober.EmailWorkerTest do
         sober_since:
           "Europe/Vienna"
           |> Timex.now()
-          |> Timex.subtract(Timex.Duration.from_days(1))
+          # credo:disable-for-next-line Credo.Check.Readability.NestedFunctionCalls
+          |> Timex.subtract(Duration.from_days(1))
           |> Timex.to_date()
       )
 

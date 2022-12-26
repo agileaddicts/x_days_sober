@@ -4,8 +4,8 @@ defmodule XDaysSoberWeb.HomeLive do
   alias Timex.Timezone
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.Router.Helpers
   alias XDaysSoberWeb.PersonLive
+  alias XDaysSoberWeb.Router.Helpers
 
   def mount(_params, _session, socket) do
     socket = assign(socket, changeset: Person.changeset(%Person{}, %{}))

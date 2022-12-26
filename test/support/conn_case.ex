@@ -17,6 +17,9 @@ defmodule XDaysSoberWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Phoenix.ConnTest
+  alias XDaysSober.DataCase
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -32,7 +35,7 @@ defmodule XDaysSoberWeb.ConnCase do
   end
 
   setup tags do
-    XDaysSober.DataCase.setup_sandbox(tags)
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    DataCase.setup_sandbox(tags)
+    {:ok, conn: ConnTest.build_conn()}
   end
 end

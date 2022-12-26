@@ -1,4 +1,6 @@
 defmodule XDaysSober.EmailWorker do
+  @moduledoc false
+
   use Oban.Worker
 
   import Swoosh.Email
@@ -23,7 +25,7 @@ defmodule XDaysSober.EmailWorker do
   }
 
   @impl Oban.Worker
-  def perform(_) do
+  def perform(_job) do
     for person <- Repo.all(Person) do
       name = person.name || person.email
 

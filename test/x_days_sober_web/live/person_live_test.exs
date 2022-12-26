@@ -3,8 +3,10 @@ defmodule XDaysSoberWeb.PersonLiveTest do
 
   import Phoenix.LiveViewTest
   import XDaysSober.Factory
-  alias XDaysSoberWeb.Router.Helpers
+
+  alias Ecto.UUID
   alias XDaysSoberWeb.PersonLive
+  alias XDaysSoberWeb.Router.Helpers
 
   test "user can access his personal page", %{conn: conn} do
     person = insert!(:person)
@@ -16,7 +18,9 @@ defmodule XDaysSoberWeb.PersonLiveTest do
 
   test "visitor is redirected when uuid does not exist", %{conn: conn} do
     {:ok, _view, html} =
-      live(conn, person_path(conn, Ecto.UUID.generate())) |> follow_redirect(conn)
+      conn
+      |> live(person_path(conn, UUID.generate()))
+      |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
   end

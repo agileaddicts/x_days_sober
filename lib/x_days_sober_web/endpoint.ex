@@ -1,3 +1,4 @@
+# credo:disable-for-this-file Credo.Check.Refactor.ModuleDependencies
 defmodule XDaysSoberWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :x_days_sober
 

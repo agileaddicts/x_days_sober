@@ -53,7 +53,9 @@ defmodule XDaysSober.MixProject do
       {:oban, "~> 2.13"},
       {:finch, "~> 0.14.0"},
       {:faker, "~> 0.17", only: :test},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:nicene, "~> 0.7.0", only: [:dev, :test], runtime: false}
     ]
   end
 

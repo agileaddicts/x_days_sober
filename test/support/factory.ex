@@ -2,7 +2,7 @@ defmodule XDaysSober.Factory do
   @moduledoc false
 
   alias Ecto.UUID
-
+  alias Faker.Internet
   alias XDaysSober.Person
   alias XDaysSober.Repo
 
@@ -11,7 +11,7 @@ defmodule XDaysSober.Factory do
   def build(:person) do
     %Person{
       uuid: UUID.generate(),
-      email: Faker.Internet.email(),
+      email: Internet.email(),
       name: Faker.Person.name(),
       timezone: "Europe/Vienna",
       sober_since: Timex.to_date(Timex.now())

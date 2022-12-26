@@ -3,8 +3,9 @@ defmodule XDaysSoberWeb.HomeLiveTest do
 
   import Phoenix.LiveViewTest
   import XDaysSober.Factory
-  alias XDaysSoberWeb.Router.Helpers
+
   alias XDaysSoberWeb.HomeLive
+  alias XDaysSoberWeb.Router.Helpers
 
   test "visitor can access homepage", %{conn: conn} do
     {:ok, _view, html} = live(conn, home_path(conn))

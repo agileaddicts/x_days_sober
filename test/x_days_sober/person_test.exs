@@ -1,9 +1,11 @@
 defmodule XDaysSober.PersonTest do
   use ExUnit.Case, async: true
 
+  alias Timex.Duration
   alias XDaysSober.Person
 
   describe "changeset/2" do
+    # Has to be implemented
     @tag :skip
     test "valid changeset" do
     end
@@ -32,7 +34,8 @@ defmodule XDaysSober.PersonTest do
         sober_since:
           timezone
           |> Timex.now()
-          |> Timex.subtract(Timex.Duration.from_days(5))
+          # credo:disable-for-next-line Credo.Check.Readability.NestedFunctionCalls
+          |> Timex.subtract(Duration.from_days(5))
           |> Timex.to_date()
       }
 

@@ -3,8 +3,8 @@ defmodule XDaysSoberWeb.PersonLive do
 
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.Router.Helpers
   alias XDaysSoberWeb.HomeLive
+  alias XDaysSoberWeb.Router.Helpers
 
   def mount(params, _session, socket) do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
