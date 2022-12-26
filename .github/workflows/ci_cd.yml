@@ -84,4 +84,4 @@ jobs:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy app to production
-        run: fly deploy --remote-only --config ./fly.toml
+        run: flyctl deploy --remote-only --config ./fly.toml
