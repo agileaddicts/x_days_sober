@@ -17,6 +17,12 @@ defmodule XDaysSober.PersonRepo do
     |> Repo.insert()
   end
 
+  def get_by_id(id) do
+    Repo.get(Person, id)
+  rescue
+    Ecto.Query.CastError -> nil
+  end
+
   def get_by_uuid(uuid) do
     Repo.get_by(Person, uuid: uuid)
   rescue
