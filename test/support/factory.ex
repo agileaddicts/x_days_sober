@@ -4,6 +4,7 @@ defmodule XDaysSober.Factory do
   alias Ecto.UUID
   alias Faker.Internet
   alias XDaysSober.Person
+  alias XDaysSober.PersonalAffirmation
   alias XDaysSober.Repo
 
   # Factories
@@ -15,6 +16,16 @@ defmodule XDaysSober.Factory do
       name: Faker.Person.name(),
       timezone: "Europe/Vienna",
       sober_since: Timex.to_date(Timex.now())
+    }
+  end
+
+  def build(:personal_affirmation) do
+    %PersonalAffirmation{
+      uuid: UUID.generate(),
+      person: build(:person),
+      day: 1,
+      text: Faker.Lorem.sentence(5..10),
+      approved: false
     }
   end
 
