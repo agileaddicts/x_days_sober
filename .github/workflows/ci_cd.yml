@@ -46,6 +46,7 @@ jobs:
           path: |
             deps
             _build
+            priv/plts
           key: ${{ runner.os }}-mix-${{ env.OTP_VERSION }}-${{ env.ELIXIR_VERSION }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
       - name: Download dependencies
         run: mix deps.get
@@ -55,11 +56,14 @@ jobs:
         run: mix hex.audit
       - name: Check code formatting
         run: mix format --check-formatted
+      - name: Create PLTs for dialyxer
+        if: steps.mix-cache.outputs.cache-hit != 'true'
+        run: mix dialyzer --plt
       - name: Run static code analysis
         run: |
           mix credo
-          mix dialyzer
-      - name: Run a security vulnerabilities audit
+          mix dialyzer --format github
+      - name: Run security vulnerabilities audit
         run: |
           mix deps.audit
           mix sobelow --config
