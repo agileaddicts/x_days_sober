@@ -14,14 +14,17 @@ defmodule XDaysSober.EmailWorker do
 
   @subjects %{
     1 => "One day sober 🎉",
-    7 => "One week sober 🎉"
+    7 => "One week sober 🎉",
+    10 => "Double digits! 10 days sober 🎆"
   }
 
   @text_bodies %{
     1 =>
       "Congratulations on taking the first step towards a sober lifestyle! The decision to get sober is not an easy one, and it takes a lot of courage and determination to make this change. Remember that you are not alone in this journey, and there are many resources and support systems available to help you along the way. Take it one day at a time, and be kind to yourself as you adjust to this new way of living. You are strong and capable, and you can do this. Keep up the good work!",
     7 =>
-      "Congratulations on one week of sobriety! You have already made a significant and positive change in your life, and should be proud of yourself for taking this important step. Remember that every day sober is a victory, and keep up the hard work. You are capable of living a fulfilling and healthy life without alcohol, and every day of sobriety brings you closer to achieving your goals. Keep going, and don't be afraid to reach out for support when you need it."
+      "Congratulations on one week of sobriety! You have already made a significant and positive change in your life, and should be proud of yourself for taking this important step. Remember that every day sober is a victory, and keep up the hard work. You are capable of living a fulfilling and healthy life without alcohol, and every day of sobriety brings you closer to achieving your goals. Keep going, and don't be afraid to reach out for support when you need it.",
+    10 =>
+      "This is awesome! You stayed sober for 10 days. I got a short poem for you:\n\nTen days sober, feeling fine\nNo more hangovers, no more wine\nWith each passing day, the journey's rough\nBut each sober moment is more than enough\n\nI hope you liked it."
   }
 
   @impl Oban.Worker

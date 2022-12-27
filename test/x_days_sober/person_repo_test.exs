@@ -8,7 +8,7 @@ defmodule XDaysSober.PersonRepoTest do
   alias XDaysSober.PersonRepo
   alias XDaysSober.Repo
 
-  describe "create/1" do
+  describe "create/2" do
     test "correct insert with unique email and correct timezone" do
       email = "test@xdayssober.local"
       timezone = "Europe/Vienna"
@@ -40,6 +40,22 @@ defmodule XDaysSober.PersonRepoTest do
       refute changeset.valid?
       assert length(changeset.errors) == 1
       assert Enum.any?(changeset.errors, fn {field, _error} -> field == :timezone end)
+    end
+  end
+
+  describe "get_by_id/1" do
+    test "correct return with existing id" do
+      person = insert!(:person)
+
+      assert PersonRepo.get_by_id(person.id)
+    end
+
+    test "correct nil return with non-existing uuid" do
+      refute PersonRepo.get_by_id(100_000)
+    end
+
+    test "correct nil return with non uuid" do
+      refute PersonRepo.get_by_id("wrong")
     end
   end
 
