@@ -42,6 +42,19 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
     end
   end
 
+  def handle_event("save", %{"personal_affirmation" => params}, socket) do
+    case PersonalAffirmationRepo.update_text(
+           socket.assigns.personal_affirmation,
+           params["text"]
+         ) do
+      {:ok, personal_affirmation} ->
+        {:noreply, assign(socket, personal_affirmation: personal_affirmation)}
+
+      {:error, _changeset} ->
+        {:noreply, socket}
+    end
+  end
+
   defp get_person_from_params(%{"person_uuid" => person_uuid}) do
     PersonRepo.get_by_uuid(person_uuid)
   end

@@ -2,4 +2,7 @@
 
 <p>Affirmation for day <%= @personal_affirmation.day %>:</p>
 
-<p><%= @personal_affirmation.text %></p>
+<form phx-submit="save">
+  <textarea name="personal_affirmation[text]"><%= @personal_affirmation.text %></textarea>
+  <button type="submit">Save</button>
+</form>

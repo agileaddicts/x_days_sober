@@ -5,6 +5,7 @@ defmodule XDaysSoberWeb.PersonalAffirmationLiveTest do
   import XDaysSober.Factory
 
   alias Ecto.UUID
+  alias XDaysSober.PersonalAffirmationRepo
   alias XDaysSoberWeb.PersonalAffirmationLive
   alias XDaysSoberWeb.Router.Helpers
 
@@ -51,6 +52,23 @@ defmodule XDaysSoberWeb.PersonalAffirmationLiveTest do
 
     assert html =~ "X Days Sober"
     refute html =~ person.email
+  end
+
+  test "user can change text on personal affirmation page", %{conn: conn} do
+    person = insert_person_with_days_sober(%{}, 3)
+
+    {:ok, view, _html} = live(conn, personal_affirmation_path(conn, person.uuid, 1))
+
+    html =
+      view
+      |> form("form", personal_affirmation: %{text: "Lorem ipsum dolor!"})
+      |> render_submit()
+
+    assert html =~ "Lorem ipsum dolor!"
+
+    personal_affirmation = PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 1)
+
+    assert personal_affirmation.text == "Lorem ipsum dolor!"
   end
 
   defp personal_affirmation_path(conn, person_uuid, day) do
