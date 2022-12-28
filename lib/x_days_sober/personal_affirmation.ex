@@ -20,7 +20,7 @@ defmodule XDaysSober.PersonalAffirmation do
 
   def changeset(personal_affirmation, params) do
     personal_affirmation
-    |> cast(params, [:uuid, :person_id, :day, :approved])
+    |> cast(params, [:uuid, :person_id, :day, :text, :approved])
     |> validate_required([:uuid, :person_id, :day, :approved])
     |> validate_day_before_sober_days()
     |> unique_constraint([:person_id, :day], name: :personal_affirmations_person_id_day_index)

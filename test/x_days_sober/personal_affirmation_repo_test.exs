@@ -62,6 +62,22 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
     end
   end
 
+  describe "update_text/2" do
+    test "updates text corretly" do
+      person = insert_person_with_days_sober(%{}, 5)
+      personal_affirmation = insert!(:personal_affirmation, %{person: person, day: 3})
+
+      {:ok, updated_personal_affirmation} =
+        PersonalAffirmationRepo.update_text(personal_affirmation, "Test Text")
+
+      assert updated_personal_affirmation.text
+
+      personal_affirmation_from_db = Repo.get(PersonalAffirmation, personal_affirmation.id)
+
+      assert personal_affirmation_from_db.text
+    end
+  end
+
   describe "get_by_person_id_and_day/2" do
     test "returns existing entry for person and day" do
       person = insert_person_with_days_sober(%{}, 5)

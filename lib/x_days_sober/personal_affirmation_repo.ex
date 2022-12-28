@@ -17,6 +17,14 @@ defmodule XDaysSober.PersonalAffirmationRepo do
     |> Repo.insert()
   end
 
+  def update_text(%PersonalAffirmation{} = personal_affirmation, text) do
+    personal_affirmation
+    |> PersonalAffirmation.changeset(%{
+      text: text
+    })
+    |> Repo.update()
+  end
+
   def get_by_person_id_and_day(person_id, day) do
     Repo.get_by(PersonalAffirmation, person_id: person_id, day: day)
   rescue
