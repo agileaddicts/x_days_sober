@@ -61,4 +61,39 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
       assert Enum.any?(changeset.errors, fn {field, _error} -> field == :person_id end)
     end
   end
+
+  describe "update_text/2" do
+    test "updates text corretly" do
+      person = insert_person_with_days_sober(%{}, 5)
+      personal_affirmation = insert!(:personal_affirmation, %{person: person, day: 3})
+
+      {:ok, updated_personal_affirmation} =
+        PersonalAffirmationRepo.update_text(personal_affirmation, "Test Text")
+
+      assert updated_personal_affirmation.text
+
+      personal_affirmation_from_db = Repo.get(PersonalAffirmation, personal_affirmation.id)
+
+      assert personal_affirmation_from_db.text
+    end
+  end
+
+  describe "get_by_person_id_and_day/2" do
+    test "returns existing entry for person and day" do
+      person = insert_person_with_days_sober(%{}, 5)
+      insert!(:personal_affirmation, %{person: person, day: 3})
+
+      assert PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)
+    end
+
+    test "returns nil for exisitng person and non-existing day" do
+      person = insert_person_with_days_sober(%{}, 5)
+
+      refute PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)
+    end
+
+    test "returns nil for non-existing person and day" do
+      refute PersonalAffirmationRepo.get_by_person_id_and_day(100_000, 3)
+    end
+  end
 end

@@ -8,7 +8,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   alias XDaysSoberWeb.PersonLive
   alias XDaysSoberWeb.Router.Helpers
 
-  test "user can access his personal page", %{conn: conn} do
+  test "user can access person detail page", %{conn: conn} do
     person = insert!(:person)
 
     {:ok, _view, html} = live(conn, person_path(conn, person.uuid))
@@ -20,6 +20,15 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     {:ok, _view, html} =
       conn
       |> live(person_path(conn, UUID.generate()))
+      |> follow_redirect(conn)
+
+    assert html =~ "X Days Sober"
+  end
+
+  test "visitor is redirected when uuid is not a real uuid", %{conn: conn} do
+    {:ok, _view, html} =
+      conn
+      |> live(person_path(conn, "wrong"))
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
