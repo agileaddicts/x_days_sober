@@ -22,6 +22,7 @@ defmodule XDaysSoberWeb.Router do
 
     live "/", HomeLive
     live "/p/:uuid", PersonLive
+    live "/pa/:person_uuid/:day", PersonalAffirmationLive
   end
 
   # Other scopes may use custom stacks.

@@ -13,7 +13,7 @@ defmodule XDaysSoberWeb.PersonLive do
       |> assign(person: person)
       |> ok()
     else
-      nil ->
+      _else ->
         {:ok,
          push_redirect(socket,
            to:
