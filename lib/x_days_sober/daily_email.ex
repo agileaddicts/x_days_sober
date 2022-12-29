@@ -4,6 +4,7 @@ defmodule XDaysSober.DailyEmail do
   import Swoosh.Email
 
   alias XDaysSoberWeb.Endpoint
+  alias XDaysSoberWeb.PersonalAffirmationLive
   alias XDaysSoberWeb.PersonLive
   alias XDaysSoberWeb.Router.Helpers
 
@@ -27,11 +28,20 @@ defmodule XDaysSober.DailyEmail do
   def generate(person, days) do
     name = person.name || person.email
 
-    url =
+    person_detail_url =
       Endpoint
       |> Helpers.live_path(
         PersonLive,
         person.uuid
+      )
+      |> build_url()
+
+    personal_affirmation_url =
+      Endpoint
+      |> Helpers.live_path(
+        PersonalAffirmationLive,
+        person.uuid,
+        days
       )
       |> build_url()
 
@@ -40,7 +50,7 @@ defmodule XDaysSober.DailyEmail do
     |> from({"X Days Sober", "xdayssober@boo.sh"})
     |> subject(subject_text(days))
     |> text_body(
-      "Hey #{name},\n\n#{text_body_text(days)}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{url}"
+      "Hey #{name},\n\n#{text_body_text(days)}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}"
     )
   end
 
