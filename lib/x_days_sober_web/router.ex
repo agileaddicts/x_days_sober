@@ -9,7 +9,8 @@ defmodule XDaysSoberWeb.Router do
     plug :protect_from_forgery
 
     plug :put_secure_browser_headers, %{
-      "content-security-policy" => "default-src 'self'; font-src 'self' data:;"
+      "content-security-policy" =>
+        "default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
     }
   end
 
