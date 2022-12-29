@@ -1,0 +1,16 @@
+{
+  "license": "SEE LICENSE IN README",
+  "dependencies": {
+    "phoenix": "./deps/phoenix",
+    "phoenix_html": "./deps/phoenix_html",
+    "phoenix_live_view": "./deps/phoenix_live_view"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.2",
+    "tailwindcss": "^3.2.4"
+  },
+  "scripts": {
+    "watch": "parcel watch --no-hmr assets/js/app.js --dist-dir priv/static/assets",
+    "build": "parcel build assets/js/app.js --dist-dir priv/static/assets"
+  }
+}

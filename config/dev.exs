@@ -25,8 +25,7 @@ config :x_days_sober, XDaysSoberWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "l3HAnxFO4m3xP1BQbSJ+cUKlM/u42ll5wb27ioD9JeZULqETDd6/KGlAsB1zXnwH",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    yarn: ["run", "watch", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
