@@ -1,1 +1,8 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+div.hero-home {
+  min-height: calc(100vh - 4rem - 61px);
+  max-height: calc(100vh - 4rem - 61px);
+}

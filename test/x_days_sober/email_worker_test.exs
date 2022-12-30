@@ -5,6 +5,7 @@ defmodule XDaysSober.EmailWorkerTest do
   import Swoosh.TestAssertions
   import XDaysSober.Factory
 
+  alias XDaysSober.DailyEmail
   alias XDaysSober.EmailWorker
 
   describe "perform/1" do
@@ -21,10 +22,10 @@ defmodule XDaysSober.EmailWorkerTest do
     end
 
     test "executes job and does send one email to person" do
-      insert_person_with_days_sober(%{}, 1)
+      person = insert_person_with_days_sober(%{}, 1)
 
       assert perform_job(EmailWorker, %{}) == :ok
-      assert_email_sent()
+      assert_email_sent(DailyEmail.generate(person, 1))
     end
   end
 end
