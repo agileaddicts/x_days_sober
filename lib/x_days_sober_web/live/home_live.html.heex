@@ -1,13 +1,23 @@
-<h1>X Days Sober</h1>
+<div class="pb-10">
+  <div class="bg-[url('../images/home.jpg')] hero-home bg-cover bg-center pt-12 pl-12">
+    <div class="w-max">
+      <p class="bg-floral-white p-4 text-prussian-blue text-4xl">
+        Stay sober,<br /> one day at a time!
+      </p>
+    </div>
+  </div>
+</div>
+
+<p>Want to sign up for X Days Sober?</p>
 
 <.form :let={f} for={@changeset} phx-submit="save">
-  <%= label f, :email %>
-  <%= text_input f, :email, type: :email, required: true %>
-  <%= error_tag f, :email %>
+  <%= label(f, :email) %>
+  <%= text_input(f, :email, type: :email, required: true) %>
+  <%= error_tag(f, :email) %>
 
-  <%= text_input f, :timezone, type: :hidden %>
+  <%= text_input(f, :timezone, type: :hidden) %>
 
-  <%= submit "I am staying sober!" %>
+  <%= submit("I am staying sober!") %>
 </.form>
 
 <script>
