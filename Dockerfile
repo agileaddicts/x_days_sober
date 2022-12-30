@@ -12,18 +12,27 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.14.2-erlang-25.2-debian-bullseye-20221004-slim
 #
+ARG NODE_VERSION=hydrogen
 ARG ELIXIR_VERSION=1.14.2
 ARG OTP_VERSION=25.2
 ARG DEBIAN_VERSION=bullseye-20221004-slim
 
+ARG NODE_IMAGE="node:${NODE_VERSION}-slim"
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
+FROM ${NODE_IMAGE} as node
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git python3 \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+# Copy node from docker image
+COPY --from=node /usr/local/include/ /usr/local/include/
+COPY --from=node /usr/local/lib/ /usr/local/lib/
+COPY --from=node /usr/local/bin/ /usr/local/bin/
+RUN corepack disable && corepack enable
 
 # prepare build dir
 WORKDIR /app
@@ -50,9 +59,11 @@ COPY priv priv
 
 COPY lib lib
 
+COPY package.json yarn.lock .postcssrc tailwind.config.js ./
 COPY assets assets
 
 # compile assets
+RUN yarn install
 RUN mix assets.deploy
 
 # Compile the release
