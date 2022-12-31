@@ -18,6 +18,8 @@ defmodule XDaysSoberWeb.HomeLive do
 
     case PersonRepo.create(params["email"], validated_timezone) do
       {:ok, person} ->
+        socket = put_flash(socket, :success, "Awesome! You'll receive the first email tomorrow.")
+
         {:noreply,
          push_redirect(socket,
            to:

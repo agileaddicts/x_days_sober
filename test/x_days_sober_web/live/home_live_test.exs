@@ -23,6 +23,7 @@ defmodule XDaysSoberWeb.HomeLiveTest do
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
+    assert html =~ "Awesome! You&#39;ll receive the first email tomorrow."
   end
 
   test "potential user gets error message when signing up with duplicated email", %{conn: conn} do
