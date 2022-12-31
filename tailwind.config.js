@@ -6,7 +6,7 @@ module.exports = {
     colors: {
       'ruby': '#D81E5B',
       'prussian-blue': '#102E4A',
-      'cadet-blue': '#5AB1BB',
+      'pine-green': '#157A6E',
       'canary': '#FFFD98',
       'floral-white': '#FFF8F0'
     },
