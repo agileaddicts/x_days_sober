@@ -13,7 +13,8 @@ defmodule XDaysSober.DailyEmail do
   @subjects %{
     1 => "One day sober 🎉",
     7 => "One week sober 🎉",
-    10 => "Double digits! 10 days sober 🎆"
+    10 => "Double digits! 10 days sober 🎆",
+    14 => "Two weeks sober 🎉"
   }
 
   @text_bodies %{
@@ -22,7 +23,9 @@ defmodule XDaysSober.DailyEmail do
     7 =>
       "Congratulations on one week of sobriety! You have already made a significant and positive change in your life, and should be proud of yourself for taking this important step. Remember that every day sober is a victory, and keep up the hard work. You are capable of living a fulfilling and healthy life without alcohol, and every day of sobriety brings you closer to achieving your goals. Keep going, and don't be afraid to reach out for support when you need it.",
     10 =>
-      "This is awesome! You stayed sober for 10 days. I got a short poem for you:\n\nTen days sober, feeling fine\nNo more hangovers, no more wine\nWith each passing day, the journey's rough\nBut each sober moment is more than enough\n\nI hope you liked it."
+      "This is awesome! You stayed sober for 10 days. I got a short poem for you:\n\nTen days sober, feeling fine\nNo more hangovers, no more wine\nWith each passing day, the journey's rough\nBut each sober moment is more than enough\n\nI hope you liked it.",
+    14 =>
+      "I am proud of you for taking control of your recovery and making the choice to stay sober for the past two weeks. This is a significant accomplishment, and you deserve to feel good about it!"
   }
 
   def generate(person, days) do
