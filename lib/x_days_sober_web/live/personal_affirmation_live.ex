@@ -19,26 +19,28 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
           |> ok()
 
         _else ->
-          {:ok,
-           push_redirect(socket,
-             to:
-               Helpers.live_path(
-                 socket,
-                 PersonLive,
-                 person.uuid
-               )
-           )}
+          socket
+          |> push_redirect(
+            to:
+              Helpers.live_path(
+                socket,
+                PersonLive,
+                person.uuid
+              )
+          )
+          |> ok()
       end
     else
       _else ->
-        {:ok,
-         push_redirect(socket,
-           to:
-             Helpers.live_path(
-               socket,
-               HomeLive
-             )
-         )}
+        socket
+        |> push_redirect(
+          to:
+            Helpers.live_path(
+              socket,
+              HomeLive
+            )
+        )
+        |> ok()
     end
   end
 
@@ -48,10 +50,15 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
            params["text"]
          ) do
       {:ok, personal_affirmation} ->
-        {:noreply, assign(socket, personal_affirmation: personal_affirmation)}
+        socket
+        |> assign(personal_affirmation: personal_affirmation)
+        |> put_flash(:success, "Saved!")
+        |> noreply()
 
       {:error, _changeset} ->
-        {:noreply, socket}
+        socket
+        |> put_flash(:error, "Could not save affirmation for today")
+        |> noreply()
     end
   end
 
