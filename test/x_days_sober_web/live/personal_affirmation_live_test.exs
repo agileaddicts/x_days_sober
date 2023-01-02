@@ -65,6 +65,7 @@ defmodule XDaysSoberWeb.PersonalAffirmationLiveTest do
       |> render_submit()
 
     assert html =~ "Lorem ipsum dolor!"
+    assert html =~ "Saved!"
 
     personal_affirmation = PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 1)
 
