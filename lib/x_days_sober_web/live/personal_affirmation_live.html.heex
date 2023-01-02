@@ -1,8 +1,16 @@
-<h1>X Days Sober</h1>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 justify-between py-8">
+  <p class="text-prussian-blue mb-4">Affirmation for day <%= @personal_affirmation.day %></p>
 
-<p>Affirmation for day <%= @personal_affirmation.day %>:</p>
-
-<form phx-submit="save">
-  <textarea name="personal_affirmation[text]"><%= @personal_affirmation.text %></textarea>
-  <button type="submit">Save</button>
-</form>
+  <form phx-submit="save">
+    <textarea
+      name="personal_affirmation[text]"
+      class="block w-64 h-16 appearance-none rounded-lg border border-prussian-blue bg-floral-white p-2 text-prussian-blue sm:text-sm"
+    ><%= @personal_affirmation.text %></textarea>
+    <button
+      type="submit"
+      class="rounded-lg p-2 text-sm font-semibold outline-2 outline-offset-2 transition-colors relative overflow-hidden bg-prussian-blue text-floral-white mt-4 w-64"
+    >
+      Save
+    </button>
+  </form>
+</div>
