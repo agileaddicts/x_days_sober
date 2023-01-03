@@ -1,5 +1,36 @@
-<h1>X Days Sober</h1>
-
-<p><%= @person.email %></p>
-
-<p>You are sober for <%= sober_days(@person) %>!</p>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 justify-between py-8">
+  <div class="overflow-hidden bg-slate-50 shadow sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg font-medium leading-6 text-prussian-blue">Your profile</h3>
+      <p class="mt-1 max-w-2xl text-sm text-prussian-blue/60">Any changes needed? Contact us!</p>
+    </div>
+    <div class="border-t border-slate-200 px-4 py-5 sm:p-0">
+      <dl class="sm:divide-y sm:divide-slate-200">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-prussian-blue/60">Email</dt>
+          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+            <%= @person.email %>
+          </dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-prussian-blue/60">Name</dt>
+          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+            <%= @person.name || "-" %>
+          </dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-prussian-blue/60">Timezone</dt>
+          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+            <%= @person.timezone %>
+          </dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-prussian-blue/60">Sober since</dt>
+          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+            <%= @person.sober_since %> (<%= sober_days(@person) %>)
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

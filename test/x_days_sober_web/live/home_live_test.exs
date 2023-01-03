@@ -22,7 +22,7 @@ defmodule XDaysSoberWeb.HomeLiveTest do
       |> render_submit()
       |> follow_redirect(conn)
 
-    assert html =~ "X Days Sober"
+    assert html =~ "me@test.local"
     assert html =~ "Awesome! You&#39;ll receive the first email tomorrow."
   end
 
