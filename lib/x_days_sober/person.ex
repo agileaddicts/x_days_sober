@@ -24,7 +24,10 @@ defmodule XDaysSober.Person do
     person
     |> cast(params, [:uuid, :email, :timezone, :sober_since])
     |> validate_required([:uuid, :email, :timezone, :sober_since])
-    |> unique_constraint(:email, name: :persons_email_index)
+    |> unique_constraint(:email,
+      name: :persons_email_index,
+      message: "This email is already registered!"
+    )
     |> validate_timezone()
   end
 

@@ -36,7 +36,7 @@ defmodule XDaysSoberWeb.HomeLiveTest do
       |> form("form", person: %{email: person.email})
       |> render_submit()
 
-    assert rendered =~ "has already been taken"
+    assert rendered =~ "This email is already registered!"
   end
 
   defp home_path(conn) do
