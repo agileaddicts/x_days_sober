@@ -9,7 +9,8 @@ import Config
 
 config :x_days_sober,
   ecto_repos: [XDaysSober.Repo],
-  base_url: "http://localhost:4000"
+  base_url: "http://localhost:4000",
+  from_email: "dev@xdayssober.local"
 
 # Configures the endpoint
 config :x_days_sober, XDaysSoberWeb.Endpoint,

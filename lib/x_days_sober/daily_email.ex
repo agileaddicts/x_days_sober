@@ -50,7 +50,7 @@ defmodule XDaysSober.DailyEmail do
 
     new()
     |> to({name, person.email})
-    |> from({"X Days Sober", "xdayssober@boo.sh"})
+    |> from({"X Days Sober", Application.fetch_env!(:x_days_sober, :from_email)})
     |> subject(subject_text(days))
     |> text_body(
       "Hey #{name},\n\n#{text_body_text(days)}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}"

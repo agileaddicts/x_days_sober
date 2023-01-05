@@ -27,8 +27,15 @@ if config_env() == :prod do
       environment variable BASE_URL is missing.
       """
 
+  from_email =
+    System.get_env("FROM_EMAIL") ||
+      raise """
+      environment variable FROM_EMAIL is missing.
+      """
+
   config :x_days_sober,
-    base_url: base_url
+    base_url: base_url,
+    from_email: from_email
 
   database_url =
     System.get_env("DATABASE_URL") ||
