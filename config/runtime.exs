@@ -27,8 +27,15 @@ if config_env() == :prod do
       environment variable BASE_URL is missing.
       """
 
+  from_email =
+    System.get_env("FROM_EMAIL") ||
+      raise """
+      environment variable FROM_EMAIL is missing.
+      """
+
   config :x_days_sober,
-    base_url: base_url
+    base_url: base_url,
+    from_email: from_email
 
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -59,7 +66,12 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  host =
+    System.get_env("PHX_HOST") ||
+      raise """
+      environment variable PHX_HOST is missing.
+      """
+
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :x_days_sober, XDaysSoberWeb.Endpoint,
