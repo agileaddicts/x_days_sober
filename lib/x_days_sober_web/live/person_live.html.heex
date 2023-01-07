@@ -53,7 +53,20 @@
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
             <dt class="text-sm font-medium text-prussian-blue/60">Timezone</dt>
             <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-              <%= @person.timezone %>
+              <%= if @edit_view do %>
+                <select
+                  name="timezone"
+                  class="mt-1 block w-64 rounded-lg border border-prussian-blue bg-floral-white p-2 text-prussian-blue sm:text-sm"
+                >
+                  <%= for tz <- @timezones do %>
+                    <option value={tz} selected={tz == @person.timezone}>
+                      <%= tz %>
+                    </option>
+                  <% end %>
+                </select>
+              <% else %>
+                <%= @person.timezone %>
+              <% end %>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
