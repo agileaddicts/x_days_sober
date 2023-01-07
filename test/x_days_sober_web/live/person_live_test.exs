@@ -34,6 +34,24 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     assert html =~ "X Days Sober"
   end
 
+  test "user can edit name", %{conn: conn} do
+    person = insert!(:person)
+
+    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+
+    view
+    |> element("button", "Edit")
+    |> render_click()
+
+    html =
+      view
+      |> form("form", name: "TestUser")
+      |> render_submit()
+
+    assert html =~ "Saved!"
+    assert html =~ "TestUser"
+  end
+
   defp person_path(conn, uuid) do
     Helpers.live_path(
       conn,

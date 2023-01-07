@@ -1,36 +1,69 @@
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 justify-between py-8">
-  <div class="overflow-hidden bg-slate-50 shadow sm:rounded-lg">
-    <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg font-medium leading-6 text-prussian-blue">Your profile</h3>
-      <p class="mt-1 max-w-2xl text-sm text-prussian-blue/60">Any changes needed? Contact us!</p>
+  <form phx-submit="save">
+    <div class="overflow-hidden bg-slate-50 shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6 flex">
+        <div class="grow">
+          <h3 class="text-lg font-medium leading-6 text-prussian-blue">Your profile</h3>
+        </div>
+        <div class="flex gap-4">
+          <button
+            class="rounded-lg border-prussian-blue border-2 p-2 text-sm font-semibold outline-2 outline-offset-2 transition-colors relative overflow-hidden bg-slate-50 text-prussian-blue w-32 block"
+            phx-click="toggle_edit"
+            type="button"
+          >
+            <%= if @edit_view do %>
+              Cancel
+            <% else %>
+              Edit
+            <% end %>
+          </button>
+          <%= if @edit_view do %>
+            <button
+              class="rounded-lg p-2 text-sm font-semibold outline-2 outline-offset-2 transition-colors relative overflow-hidden bg-prussian-blue text-floral-white w-32 block"
+              type="submit"
+            >
+              Save
+            </button>
+          <% end %>
+        </div>
+      </div>
+      <div class="border-t border-slate-200 px-4 py-5 sm:p-0">
+        <dl class="sm:divide-y sm:divide-slate-200">
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-prussian-blue/60">Email</dt>
+            <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+              <%= @person.email %>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-prussian-blue/60">Name</dt>
+            <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+              <%= if @edit_view do %>
+                <input
+                  type="text"
+                  class="block w-64 appearance-none rounded-lg border border-prussian-blue bg-floral-white p-2 text-prussian-blue sm:text-sm"
+                  name="name"
+                  value={@person.name}
+                />
+              <% else %>
+                <%= @person.name || "-" %>
+              <% end %>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-prussian-blue/60">Timezone</dt>
+            <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+              <%= @person.timezone %>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-prussian-blue/60">Sober since</dt>
+            <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+              <%= @person.sober_since %> (<%= sober_days(@person) %>)
+            </dd>
+          </div>
+        </dl>
+      </div>
     </div>
-    <div class="border-t border-slate-200 px-4 py-5 sm:p-0">
-      <dl class="sm:divide-y sm:divide-slate-200">
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-          <dt class="text-sm font-medium text-prussian-blue/60">Email</dt>
-          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-            <%= @person.email %>
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-          <dt class="text-sm font-medium text-prussian-blue/60">Name</dt>
-          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-            <%= @person.name || "-" %>
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-          <dt class="text-sm font-medium text-prussian-blue/60">Timezone</dt>
-          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-            <%= @person.timezone %>
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-          <dt class="text-sm font-medium text-prussian-blue/60">Sober since</dt>
-          <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-            <%= @person.sober_since %> (<%= sober_days(@person) %>)
-          </dd>
-        </div>
-      </dl>
-    </div>
-  </div>
+  </form>
 </div>
