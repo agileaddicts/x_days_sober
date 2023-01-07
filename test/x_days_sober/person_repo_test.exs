@@ -43,6 +43,16 @@ defmodule XDaysSober.PersonRepoTest do
     end
   end
 
+  describe "update/2" do
+    test "correct update with new name" do
+      person = insert!(:person)
+
+      {:ok, updated_person} = PersonRepo.update(person, "TestName")
+
+      assert person.name != updated_person.name
+    end
+  end
+
   describe "get_by_id/1" do
     test "correct return with existing id" do
       person = insert!(:person)

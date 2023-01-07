@@ -17,6 +17,14 @@ defmodule XDaysSober.PersonRepo do
     |> Repo.insert()
   end
 
+  def update(person, name) do
+    person
+    |> Person.changeset(%{
+      name: name
+    })
+    |> Repo.update()
+  end
+
   def get_by_id(id) do
     Repo.get(Person, id)
   rescue

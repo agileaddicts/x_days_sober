@@ -22,7 +22,7 @@ defmodule XDaysSober.Person do
 
   def changeset(person, params) do
     person
-    |> cast(params, [:uuid, :email, :timezone, :sober_since])
+    |> cast(params, [:uuid, :email, :name, :timezone, :sober_since])
     |> validate_required([:uuid, :email, :timezone, :sober_since])
     |> unique_constraint(:email,
       name: :persons_email_index,
