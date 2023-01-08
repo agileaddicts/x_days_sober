@@ -30,16 +30,14 @@ defmodule XDaysSober.PersonRepoTest do
       {:error, changeset} = PersonRepo.create(person.email, "Europe/Vienna")
 
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :email end)
+      assert %{email: ["This email is already registered!"]} = errors_on(changeset)
     end
 
     test "error with unique email and wrong timezone" do
       {:error, changeset} = PersonRepo.create("test@xdayssober.local", "wrong")
 
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :timezone end)
+      assert %{timezone: ["must be a valid timezone"]} = errors_on(changeset)
     end
   end
 
@@ -58,8 +56,7 @@ defmodule XDaysSober.PersonRepoTest do
       {:error, changeset} = PersonRepo.update(person, "TestName", "wrong")
 
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :timezone end)
+      assert %{timezone: ["must be a valid timezone"]} = errors_on(changeset)
     end
   end
 

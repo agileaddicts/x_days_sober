@@ -23,7 +23,10 @@ defmodule XDaysSober.PersonalAffirmation do
     |> cast(params, [:uuid, :person_id, :day, :text, :approved])
     |> validate_required([:uuid, :person_id, :day, :approved])
     |> validate_day_before_sober_days()
-    |> unique_constraint([:person_id, :day], name: :personal_affirmations_person_id_day_index)
+    |> unique_constraint([:person_id, :day],
+      name: :personal_affirmations_person_id_day_index,
+      message: "does already exist"
+    )
   end
 
   defp validate_day_before_sober_days(changeset) do
