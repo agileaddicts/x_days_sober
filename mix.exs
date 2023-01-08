@@ -15,7 +15,7 @@ defmodule XDaysSober.MixProject do
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ],
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test]
+      preferred_cli_env: [coveralls: :test, "coveralls.lcov": :test]
     ]
   end
 

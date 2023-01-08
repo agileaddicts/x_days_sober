@@ -67,10 +67,15 @@ jobs:
         run: |
           mix deps.audit
           mix sobelow --config
-      - name: Run tests
+      - name: Run tests using coveralls
         env:
           MIX_ENV: test
-        run: mix test
+        run: mix coveralls.lcov
+      - name: Send lcov to coveralls service
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: "cover/lcov.info"
   deploy-production:
     name: Deploy app to production
     concurrency: production_environment
