@@ -14,6 +14,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     {:ok, _view, html} = live(conn, person_path(conn, person.uuid))
 
     assert html =~ person.email
+    assert html =~ "(0 days)"
   end
 
   test "visitor is redirected when uuid does not exist", %{conn: conn} do
@@ -32,6 +33,15 @@ defmodule XDaysSoberWeb.PersonLiveTest do
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
+  end
+
+  test "user can see correct indication of 1 day sober", %{conn: conn} do
+    person = insert_person_with_days_sober(%{}, 1)
+
+    {:ok, _view, html} = live(conn, person_path(conn, person.uuid))
+
+    assert html =~ person.email
+    assert html =~ "(1 day)"
   end
 
   test "user can edit and save with same values", %{conn: conn} do

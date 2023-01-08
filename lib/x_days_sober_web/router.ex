@@ -14,10 +14,6 @@ defmodule XDaysSoberWeb.Router do
     }
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", XDaysSoberWeb do
     pipe_through :browser
 
@@ -25,11 +21,6 @@ defmodule XDaysSoberWeb.Router do
     live "/p/:uuid", PersonLive
     live "/pa/:person_uuid/:day", PersonalAffirmationLive
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", XDaysSoberWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

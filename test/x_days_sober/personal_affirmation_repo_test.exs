@@ -86,7 +86,7 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
       assert PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)
     end
 
-    test "returns nil for exisitng person and non-existing day" do
+    test "returns nil for existing person and non-existing day" do
       person = insert_person_with_days_sober(%{}, 5)
 
       refute PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)

@@ -1,5 +1,7 @@
 # x_days_sober
 
+[![Coverage Status](https://coveralls.io/repos/github/agileaddicts/x_days_sober/badge.svg?branch=dev)](https://coveralls.io/github/agileaddicts/x_days_sober?branch=dev)
+
 ## Deployment on fly.io
 
 The application name on fly.io is `xdayssober`. It is connected to the `lifttribe-staging-pg` Postgres database.

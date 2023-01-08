@@ -30,15 +30,11 @@ defmodule XDaysSober.PersonalAffirmation do
     person_id = get_field(changeset, :person_id)
     day = get_field(changeset, :day)
 
-    if person_id != nil && day != nil do
-      person = PersonRepo.get_by_id(person_id)
-      sober_days = Person.calculate_sober_days(person)
+    person = PersonRepo.get_by_id(person_id)
+    sober_days = Person.calculate_sober_days(person)
 
-      if sober_days < day do
-        add_error(changeset, :day, "must be within your sober days")
-      else
-        changeset
-      end
+    if sober_days < day do
+      add_error(changeset, :day, "must be within your sober days")
     else
       changeset
     end
