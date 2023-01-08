@@ -13,7 +13,9 @@ defmodule XDaysSober.MixProject do
       deps: deps(),
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
-      ]
+      ],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test]
     ]
   end
 
@@ -59,7 +61,8 @@ defmodule XDaysSober.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:nicene, "~> 0.7.0", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
-      {:sobelow, "~> 0.8", only: :dev}
+      {:sobelow, "~> 0.8", only: :dev},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
