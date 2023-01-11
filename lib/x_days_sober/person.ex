@@ -14,6 +14,7 @@ defmodule XDaysSober.Person do
     field :name, :string
     field :timezone, :string
     field :sober_since, :date
+    field :unsubscribed, :boolean, default: false
 
     has_many :personal_affirmations, PersonalAffirmation
 

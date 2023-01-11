@@ -17,7 +17,8 @@ defmodule XDaysSober.Factory do
       email: Internet.email(),
       name: Faker.Person.name(),
       timezone: "Europe/Vienna",
-      sober_since: Timex.to_date(Timex.now())
+      sober_since: Timex.to_date(Timex.now()),
+      unsubscribed: false
     }
   end
 
@@ -55,8 +56,8 @@ defmodule XDaysSober.Factory do
   end
 
   def insert_person_with_days_sober(attributes, days_sober) do
-    person = build_person_with_days_sober(attributes, days_sober)
-
-    Repo.insert!(person)
+    attributes
+    |> build_person_with_days_sober(days_sober)
+    |> Repo.insert!()
   end
 end

@@ -10,6 +10,7 @@ defmodule XDaysSoberWeb.PersonLive do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
          %Person{} = person <- PersonRepo.get_by_uuid(uuid) do
       socket
+      |> maybe_unsubscribe(person, params)
       |> assign(
         person: person,
         edit_view: false,
@@ -49,6 +50,12 @@ defmodule XDaysSoberWeb.PersonLive do
         |> noreply()
     end
   end
+
+  defp maybe_unsubscribe(socket, _person, %{"unsubscribe" => _unsubscribe}) do
+    put_flash(socket, :warning, "You won't receive any emails from us anymore!")
+  end
+
+  defp maybe_unsubscribe(socket, _person, _params), do: socket
 
   defp sober_days(%Person{} = person) do
     case Person.calculate_sober_days(person) do
