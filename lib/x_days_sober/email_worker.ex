@@ -17,7 +17,7 @@ defmodule XDaysSober.EmailWorker do
     for person <- Repo.all(Person) do
       days = Person.calculate_sober_days(person)
 
-      if days > 0 do
+      if !person.unsubscribed && days > 0 do
         Logger.info("Sending email for person #{person.uuid} and day #{days}")
 
         person

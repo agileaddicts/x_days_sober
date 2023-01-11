@@ -9,23 +9,30 @@ defmodule XDaysSober.EmailWorkerTest do
   alias XDaysSober.EmailWorker
 
   describe "perform/1" do
-    test "executes job but does not send any mails with no persons in database" do
+    test "sending no mails with no persons in database" do
       assert perform_job(EmailWorker, %{}) == :ok
       assert_no_email_sent()
     end
 
-    test "executes job but does not send any mails with person signed up today" do
+    test "sending no mail to person signed up today" do
       insert!(:person)
 
       assert perform_job(EmailWorker, %{}) == :ok
       assert_no_email_sent()
     end
 
-    test "executes job and does send one email to person" do
+    test "sending one email to person" do
       person = insert_person_with_days_sober(%{}, 1)
 
       assert perform_job(EmailWorker, %{}) == :ok
       assert_email_sent(DailyEmail.generate(person, 1))
+    end
+
+    test "sending no email to person which is unsubscribed" do
+      insert_person_with_days_sober(%{unsubscribed: true}, 1)
+
+      assert perform_job(EmailWorker, %{}) == :ok
+      assert_no_email_sent()
     end
   end
 end
