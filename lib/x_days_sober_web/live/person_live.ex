@@ -51,8 +51,12 @@ defmodule XDaysSoberWeb.PersonLive do
     end
   end
 
-  defp maybe_unsubscribe(socket, _person, %{"unsubscribe" => _unsubscribe}) do
-    put_flash(socket, :warning, "You won't receive any emails from us anymore!")
+  defp maybe_unsubscribe(socket, person, %{"unsubscribe" => _unsubscribe}) do
+    {:ok, person} = PersonRepo.unsubscribe(person)
+
+    socket
+    |> assign(person: person)
+    |> put_flash(:warning, "You won't receive any emails from us anymore!")
   end
 
   defp maybe_unsubscribe(socket, _person, _params), do: socket

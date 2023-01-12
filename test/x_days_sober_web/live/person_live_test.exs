@@ -5,6 +5,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   import XDaysSober.Factory
 
   alias Ecto.UUID
+  alias XDaysSober.PersonRepo
   alias XDaysSoberWeb.PersonLive
   alias XDaysSoberWeb.Router.Helpers
 
@@ -33,6 +34,18 @@ defmodule XDaysSoberWeb.PersonLiveTest do
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
+  end
+
+  test "user can unsubscribe via link", %{conn: conn} do
+    person = insert!(:person)
+
+    {:ok, _view, html} = live(conn, person_path(conn, person.uuid, unsubscribe: 1))
+
+    assert html =~ "You won&#39;t receive any emails from us anymore!"
+
+    person_from_db = PersonRepo.get_by_id(person.id)
+
+    assert person_from_db.unsubscribed
   end
 
   test "user can see correct indication of 1 day sober", %{conn: conn} do
@@ -103,11 +116,12 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     refute html =~ person.timezone
   end
 
-  defp person_path(conn, uuid) do
+  defp person_path(conn, uuid, params \\ []) do
     Helpers.live_path(
       conn,
       PersonLive,
-      uuid
+      uuid,
+      params
     )
   end
 end
