@@ -1,6 +1,8 @@
 defmodule XDaysSoberWeb.DashboardTest do
   use XDaysSoberWeb.ConnCase
 
+  import Phoenix.LiveViewTest
+
   test "that developer is redirected when accessing /dashboard", %{conn: conn} do
     conn = get(conn, "/dashboard")
 
@@ -8,8 +10,8 @@ defmodule XDaysSoberWeb.DashboardTest do
   end
 
   test "that developer can view dashboard with redirected url", %{conn: conn} do
-    conn = get(conn, "/dashboard/home")
+    {:ok, _view, html} = live(conn, "/dashboard/home")
 
-    assert html_response(conn, 200) =~ "Phoenix LiveDashboard"
+    assert html =~ "Phoenix LiveDashboard"
   end
 end
