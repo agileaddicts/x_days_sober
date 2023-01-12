@@ -60,6 +60,24 @@ defmodule XDaysSober.PersonRepoTest do
     end
   end
 
+  describe "unsubscribe/1" do
+    test "correct update returning unsubscribed user" do
+      person = insert!(:person, unsubscribed: false)
+
+      {:ok, updated_person} = PersonRepo.unsubscribe(person)
+
+      assert updated_person.unsubscribed
+    end
+
+    test "correct update returning unchanged user if user is already subscribed" do
+      person = insert!(:person, unsubscribed: true)
+
+      {:ok, updated_person} = PersonRepo.unsubscribe(person)
+
+      assert updated_person.unsubscribed
+    end
+  end
+
   describe "get_by_id/1" do
     test "correct return with existing id" do
       person = insert!(:person)

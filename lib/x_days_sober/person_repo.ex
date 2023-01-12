@@ -26,6 +26,14 @@ defmodule XDaysSober.PersonRepo do
     |> Repo.update()
   end
 
+  def unsubscribe(person) do
+    person
+    |> Person.changeset(%{
+      unsubscribed: true
+    })
+    |> Repo.update()
+  end
+
   def get_by_id(id) do
     Repo.get(Person, id)
   rescue
