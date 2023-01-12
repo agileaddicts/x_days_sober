@@ -1,6 +1,7 @@
 defmodule XDaysSoberWeb.PersonLiveTest do
   use XDaysSoberWeb.ConnCase
 
+  import Phoenix.HTML
   import Phoenix.LiveViewTest
   import XDaysSober.Factory
 
@@ -72,7 +73,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
       |> render_submit()
 
     assert html =~ "Saved!"
-    assert html =~ person.name
+    assert html =~ person.name |> html_escape() |> safe_to_string()
     assert html =~ person.timezone
   end
 
@@ -92,7 +93,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
 
     assert html =~ "Saved!"
     assert html =~ "Test Name"
-    refute html =~ person.name
+    refute html =~ person.name |> html_escape() |> safe_to_string()
   end
 
   test "user can remove his name", %{conn: conn} do
@@ -110,7 +111,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
       |> render_submit()
 
     assert html =~ "Saved!"
-    refute html =~ person.name
+    refute html =~ person.name |> html_escape() |> safe_to_string()
   end
 
   test "user can edit and save with new timezone", %{conn: conn} do
