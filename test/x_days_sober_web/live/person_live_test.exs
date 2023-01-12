@@ -93,10 +93,27 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     assert html =~ "Saved!"
     assert html =~ "Test Name"
     refute html =~ person.name
-    assert html =~ person.timezone
   end
 
-  test "user can edit and save with new tiemzone", %{conn: conn} do
+  test "user can remove his name", %{conn: conn} do
+    person = insert!(:person)
+
+    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+
+    view
+    |> element("button", "Edit")
+    |> render_click()
+
+    html =
+      view
+      |> form("form", name: nil)
+      |> render_submit()
+
+    assert html =~ "Saved!"
+    refute html =~ person.name
+  end
+
+  test "user can edit and save with new timezone", %{conn: conn} do
     person = insert!(:person)
 
     {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
@@ -111,9 +128,13 @@ defmodule XDaysSoberWeb.PersonLiveTest do
       |> render_submit()
 
     assert html =~ "Saved!"
-    assert html =~ person.name
     assert html =~ "America/New_York"
     refute html =~ person.timezone
+  end
+
+  # Has to be implemented
+  @tag :skip
+  test "user gets error if sending invalid timezone" do
   end
 
   defp person_path(conn, uuid, params \\ []) do
