@@ -66,16 +66,12 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
     PersonRepo.get_by_uuid(person_uuid)
   end
 
-  defp get_person_from_params(_params), do: nil
-
   defp get_day_from_params(%{"day" => day}) do
     case Integer.parse(day) do
       {day, _rem} -> day
       _else -> nil
     end
   end
-
-  defp get_day_from_params(_params), do: nil
 
   defp get_or_create(person, day) do
     case PersonalAffirmationRepo.get_by_person_id_and_day(person.id, day) do

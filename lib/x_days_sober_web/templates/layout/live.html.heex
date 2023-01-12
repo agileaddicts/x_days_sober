@@ -1,7 +1,7 @@
 <main>
   <%= if live_flash(@flash, :success) do %>
     <div
-      class="border-l-4 border-prussian-blue bg-pine-green p-4 fixed top-0 right-0"
+      class="border-l-4 border-prussian-blue bg-pine-green p-4"
       phx-click="lv:clear-flash"
       phx-value-key="success"
     >
@@ -32,7 +32,7 @@
   <% end %>
   <%= if live_flash(@flash, :info) do %>
     <div
-      class="border-l-4 border-prussian-blue bg-floral-white p-4 fixed top-0 right-0"
+      class="border-l-4 border-prussian-blue bg-floral-white p-4"
       phx-click="lv:clear-flash"
       phx-value-key="info"
     >
@@ -63,7 +63,7 @@
   <% end %>
   <%= if live_flash(@flash, :warning) do %>
     <div
-      class="border-l-4 border-prussian-blue bg-canary p-4 fixed top-0 right-0"
+      class="border-l-4 border-prussian-blue bg-canary p-4"
       phx-click="lv:clear-flash"
       phx-value-key="warning"
     >
@@ -94,7 +94,7 @@
   <% end %>
   <%= if live_flash(@flash, :error) do %>
     <div
-      class="border-l-4 border-prussian-blue bg-ruby p-4 fixed top-0 right-0"
+      class="border-l-4 border-prussian-blue bg-ruby p-4"
       phx-click="lv:clear-flash"
       phx-value-key="error"
     >

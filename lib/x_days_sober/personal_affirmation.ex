@@ -23,22 +23,21 @@ defmodule XDaysSober.PersonalAffirmation do
     |> cast(params, [:uuid, :person_id, :day, :text, :approved])
     |> validate_required([:uuid, :person_id, :day, :approved])
     |> validate_day_before_sober_days()
-    |> unique_constraint([:person_id, :day], name: :personal_affirmations_person_id_day_index)
+    |> unique_constraint([:person_id, :day],
+      name: :personal_affirmations_person_id_day_index,
+      message: "does already exist"
+    )
   end
 
   defp validate_day_before_sober_days(changeset) do
     person_id = get_field(changeset, :person_id)
     day = get_field(changeset, :day)
 
-    if person_id != nil && day != nil do
-      person = PersonRepo.get_by_id(person_id)
-      sober_days = Person.calculate_sober_days(person)
+    person = PersonRepo.get_by_id(person_id)
+    sober_days = Person.calculate_sober_days(person)
 
-      if sober_days < day do
-        add_error(changeset, :day, "must be within your sober days")
-      else
-        changeset
-      end
+    if sober_days < day do
+      add_error(changeset, :day, "must be within your sober days")
     else
       changeset
     end

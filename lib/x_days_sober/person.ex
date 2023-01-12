@@ -14,6 +14,7 @@ defmodule XDaysSober.Person do
     field :name, :string
     field :timezone, :string
     field :sober_since, :date
+    field :unsubscribed, :boolean, default: false
 
     has_many :personal_affirmations, PersonalAffirmation
 
@@ -22,7 +23,7 @@ defmodule XDaysSober.Person do
 
   def changeset(person, params) do
     person
-    |> cast(params, [:uuid, :email, :name, :timezone, :sober_since])
+    |> cast(params, [:uuid, :email, :name, :timezone, :sober_since, :unsubscribed])
     |> validate_required([:uuid, :email, :timezone, :sober_since])
     |> unique_constraint(:email,
       name: :persons_email_index,

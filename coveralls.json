@@ -1,0 +1,7 @@
+{
+  "skip_files": [
+    "lib/x_days_sober/application.ex",
+    "lib/x_days_sober/release.ex",
+    "lib/x_days_sober_web.ex"
+  ]
+}

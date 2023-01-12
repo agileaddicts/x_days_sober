@@ -30,26 +30,51 @@ defmodule XDaysSober.PersonRepoTest do
       {:error, changeset} = PersonRepo.create(person.email, "Europe/Vienna")
 
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :email end)
+      assert %{email: ["This email is already registered!"]} = errors_on(changeset)
     end
 
     test "error with unique email and wrong timezone" do
       {:error, changeset} = PersonRepo.create("test@xdayssober.local", "wrong")
 
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :timezone end)
+      assert %{timezone: ["must be a valid timezone"]} = errors_on(changeset)
     end
   end
 
   describe "update/2" do
-    test "correct update with new name" do
+    test "correct update with new name and timezone" do
       person = insert!(:person)
 
-      {:ok, updated_person} = PersonRepo.update(person, "TestName")
+      {:ok, updated_person} = PersonRepo.update(person, "TestName", "Europe/Vienna")
 
       assert person.name != updated_person.name
+    end
+
+    test "error with not existing timezone" do
+      person = insert!(:person)
+
+      {:error, changeset} = PersonRepo.update(person, "TestName", "wrong")
+
+      refute changeset.valid?
+      assert %{timezone: ["must be a valid timezone"]} = errors_on(changeset)
+    end
+  end
+
+  describe "unsubscribe/1" do
+    test "correct update returning unsubscribed user" do
+      person = insert!(:person, unsubscribed: false)
+
+      {:ok, updated_person} = PersonRepo.unsubscribe(person)
+
+      assert updated_person.unsubscribed
+    end
+
+    test "correct update returning unchanged user if user is already subscribed" do
+      person = insert!(:person, unsubscribed: true)
+
+      {:ok, updated_person} = PersonRepo.unsubscribe(person)
+
+      assert updated_person.unsubscribed
     end
   end
 

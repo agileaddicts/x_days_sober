@@ -46,8 +46,7 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
 
       {:error, changeset} = PersonalAffirmationRepo.create(person, 5)
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :day end)
+      assert %{day: ["must be within your sober days"]} = errors_on(changeset)
     end
 
     test "error with duplicate day for the same person" do
@@ -57,8 +56,7 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
 
       {:error, changeset} = PersonalAffirmationRepo.create(person, 2)
       refute changeset.valid?
-      assert length(changeset.errors) == 1
-      assert Enum.any?(changeset.errors, fn {field, _error} -> field == :person_id end)
+      assert %{person_id: ["does already exist"]} = errors_on(changeset)
     end
   end
 
@@ -86,7 +84,7 @@ defmodule XDaysSober.PersonalAffirmationRepoTest do
       assert PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)
     end
 
-    test "returns nil for exisitng person and non-existing day" do
+    test "returns nil for existing person and non-existing day" do
       person = insert_person_with_days_sober(%{}, 5)
 
       refute PersonalAffirmationRepo.get_by_person_id_and_day(person.id, 3)

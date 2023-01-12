@@ -10,12 +10,8 @@ defmodule XDaysSoberWeb.Router do
 
     plug :put_secure_browser_headers, %{
       "content-security-policy" =>
-        "default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
+        "default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
     }
-  end
-
-  pipeline :api do
-    plug :accepts, ["json"]
   end
 
   scope "/", XDaysSoberWeb do
@@ -25,11 +21,6 @@ defmodule XDaysSoberWeb.Router do
     live "/p/:uuid", PersonLive
     live "/pa/:person_uuid/:day", PersonalAffirmationLive
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", XDaysSoberWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

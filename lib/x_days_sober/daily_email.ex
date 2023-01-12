@@ -40,14 +40,6 @@ defmodule XDaysSober.DailyEmail do
   def generate(person, days) do
     name = person.name || person.email
 
-    person_detail_url =
-      Endpoint
-      |> Helpers.live_path(
-        PersonLive,
-        person.uuid
-      )
-      |> build_url()
-
     personal_affirmation_url =
       Endpoint
       |> Helpers.live_path(
@@ -57,12 +49,29 @@ defmodule XDaysSober.DailyEmail do
       )
       |> build_url()
 
+    person_detail_url =
+      Endpoint
+      |> Helpers.live_path(
+        PersonLive,
+        person.uuid
+      )
+      |> build_url()
+
+    person_unsubscribe_url =
+      Endpoint
+      |> Helpers.live_path(
+        PersonLive,
+        person.uuid,
+        unsubscribe: 1
+      )
+      |> build_url()
+
     new()
     |> to({name, person.email})
     |> from({"X Days Sober", Application.fetch_env!(:x_days_sober, :from_email)})
     |> subject(subject_text(days))
     |> text_body(
-      "Hey #{name},\n\n#{text_body_text(days)}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}"
+      "Hey #{name},\n\n#{text_body_text(days)}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}\n\nUnsubscribe at: #{person_unsubscribe_url}"
     )
   end
 
