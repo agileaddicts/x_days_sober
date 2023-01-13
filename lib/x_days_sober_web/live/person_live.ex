@@ -4,18 +4,19 @@ defmodule XDaysSoberWeb.PersonLive do
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
   alias XDaysSoberWeb.HomeLive
+  alias XDaysSoberWeb.PersonLive
   alias XDaysSoberWeb.Router.Helpers
 
   def mount(params, _session, socket) do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
          %Person{} = person <- PersonRepo.get_by_uuid(uuid) do
       socket
-      |> maybe_unsubscribe(person, params)
       |> assign(
         person: person,
         edit_view: false,
         timezones: Tzdata.canonical_zone_list()
       )
+      |> maybe_unsubscribe(person, params)
       |> ok()
     else
       _else ->
@@ -57,6 +58,14 @@ defmodule XDaysSoberWeb.PersonLive do
     socket
     |> assign(person: person)
     |> put_flash(:warning, "You won't receive any emails from us anymore!")
+    |> push_redirect(
+      to:
+        Helpers.live_path(
+          socket,
+          PersonLive,
+          person.uuid
+        )
+    )
   end
 
   defp maybe_unsubscribe(socket, _person, _params), do: socket
