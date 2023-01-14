@@ -40,7 +40,8 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can unsubscribe via link", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, _view, html} = live(conn, person_path(conn, person.uuid, unsubscribe: 1))
+    {:ok, _view, html} =
+      conn |> live(person_path(conn, person.uuid, unsubscribe: 1)) |> follow_redirect(conn)
 
     assert html =~ "You won&#39;t receive any emails from us anymore!"
 
@@ -75,6 +76,8 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     assert html =~ "Saved!"
     assert html =~ person.name |> html_escape() |> safe_to_string()
     assert html =~ person.timezone
+    # Unsubscribed
+    assert html =~ "Yes"
   end
 
   test "user can edit and save with new name", %{conn: conn} do

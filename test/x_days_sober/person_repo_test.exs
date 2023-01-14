@@ -45,15 +45,17 @@ defmodule XDaysSober.PersonRepoTest do
     test "correct update with new name and timezone" do
       person = insert!(:person)
 
-      {:ok, updated_person} = PersonRepo.update(person, "TestName", "Europe/Vienna")
+      {:ok, updated_person} = PersonRepo.update(person, "TestName", "Etc/UTC", true)
 
       assert person.name != updated_person.name
+      assert person.timezone != updated_person.timezone
+      assert person.unsubscribed != updated_person.unsubscribed
     end
 
     test "error with not existing timezone" do
       person = insert!(:person)
 
-      {:error, changeset} = PersonRepo.update(person, "TestName", "wrong")
+      {:error, changeset} = PersonRepo.update(person, "TestName", "wrong", true)
 
       refute changeset.valid?
       assert %{timezone: ["must be a valid timezone"]} = errors_on(changeset)

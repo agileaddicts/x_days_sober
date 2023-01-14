@@ -4,18 +4,19 @@ defmodule XDaysSoberWeb.PersonLive do
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
   alias XDaysSoberWeb.HomeLive
+  alias XDaysSoberWeb.PersonLive
   alias XDaysSoberWeb.Router.Helpers
 
   def mount(params, _session, socket) do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
          %Person{} = person <- PersonRepo.get_by_uuid(uuid) do
       socket
-      |> maybe_unsubscribe(person, params)
       |> assign(
         person: person,
         edit_view: false,
         timezones: Tzdata.canonical_zone_list()
       )
+      |> maybe_unsubscribe(person, params)
       |> ok()
     else
       _else ->
@@ -37,7 +38,11 @@ defmodule XDaysSoberWeb.PersonLive do
   end
 
   def handle_event("save", params, socket) do
-    case PersonRepo.update(socket.assigns.person, params["name"], params["timezone"]) do
+    new_name = Map.get(params, "name", "")
+    new_timezone = Map.get(params, "timezone", "")
+    new_unsubscribed = Map.get(params, "unsubscribed", "1") == "1"
+
+    case PersonRepo.update(socket.assigns.person, new_name, new_timezone, new_unsubscribed) do
       {:ok, person} ->
         socket
         |> put_flash(:success, "Saved!")
@@ -57,6 +62,14 @@ defmodule XDaysSoberWeb.PersonLive do
     socket
     |> assign(person: person)
     |> put_flash(:warning, "You won't receive any emails from us anymore!")
+    |> push_redirect(
+      to:
+        Helpers.live_path(
+          socket,
+          PersonLive,
+          person.uuid
+        )
+    )
   end
 
   defp maybe_unsubscribe(socket, _person, _params), do: socket

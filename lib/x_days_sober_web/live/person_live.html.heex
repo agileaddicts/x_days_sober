@@ -75,6 +75,25 @@
               <%= @person.sober_since %> (<%= sober_days(@person) %>)
             </dd>
           </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-prussian-blue/60">Daily emails?</dt>
+            <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
+              <%= if @edit_view do %>
+                <input
+                  type="checkbox"
+                  name="unsubscribed"
+                  value="0"
+                  checked={!@person.unsubscribed}
+                />
+              <% else %>
+                <%= unless @person.unsubscribed do %>
+                  Yes
+                <% else %>
+                  No
+                <% end %>
+              <% end %>
+            </dd>
+          </div>
         </dl>
       </div>
     </div>
