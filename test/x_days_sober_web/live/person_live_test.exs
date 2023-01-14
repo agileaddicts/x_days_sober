@@ -76,6 +76,8 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     assert html =~ "Saved!"
     assert html =~ person.name |> html_escape() |> safe_to_string()
     assert html =~ person.timezone
+    # Unsubscribed
+    assert html =~ "Yes"
   end
 
   test "user can edit and save with new name", %{conn: conn} do

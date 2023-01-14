@@ -38,7 +38,11 @@ defmodule XDaysSoberWeb.PersonLive do
   end
 
   def handle_event("save", params, socket) do
-    case PersonRepo.update(socket.assigns.person, params["name"], params["timezone"]) do
+    new_name = Map.get(params, "name", "")
+    new_timezone = Map.get(params, "timezone", "")
+    new_unsubscribed = Map.get(params, "unsubscribed", "1") == "1"
+
+    case PersonRepo.update(socket.assigns.person, new_name, new_timezone, new_unsubscribed) do
       {:ok, person} ->
         socket
         |> put_flash(:success, "Saved!")
