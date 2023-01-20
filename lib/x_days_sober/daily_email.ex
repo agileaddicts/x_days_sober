@@ -3,6 +3,7 @@ defmodule XDaysSober.DailyEmail do
 
   import Swoosh.Email
 
+  alias XDaysSober.DailyEmailTemplate
   alias XDaysSoberWeb.Endpoint
   alias XDaysSoberWeb.PersonalAffirmationLive
   alias XDaysSoberWeb.PersonLive
@@ -40,6 +41,14 @@ defmodule XDaysSober.DailyEmail do
   def generate(person, days) do
     name = person.name || person.email
 
+    subject_text = subject_text(days)
+    text_body_text = text_body_text(days)
+
+    logo_url =
+      Endpoint
+      |> Helpers.static_path("/images/logo.png")
+      |> build_url()
+
     personal_affirmation_url =
       Endpoint
       |> Helpers.live_path(
@@ -66,12 +75,24 @@ defmodule XDaysSober.DailyEmail do
       )
       |> build_url()
 
+    html =
+      DailyEmailTemplate.render(
+        logo_url: logo_url,
+        subject: subject_text,
+        name: name,
+        text_body_text: text_body_text,
+        personal_affirmation_url: personal_affirmation_url,
+        person_detail_url: person_detail_url,
+        person_unsubscribe_url: person_unsubscribe_url
+      )
+
     new()
     |> to({name, person.email})
     |> from({"X Days Sober", Application.fetch_env!(:x_days_sober, :from_email)})
-    |> subject(subject_text(days))
+    |> subject(subject_text)
+    |> html_body(html)
     |> text_body(
-      "Hey #{name},\n\n#{text_body_text(days)}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}\n\nUnsubscribe at: #{person_unsubscribe_url}"
+      "Hey #{name},\n\n#{text_body_text}\n\nDo you want to write an affirmation for others who are at the same point: #{personal_affirmation_url}\n\nUntil tomorrow,\nSebastian\n\nChange your settings at: #{person_detail_url}\n\nUnsubscribe at: #{person_unsubscribe_url}"
     )
   end
 

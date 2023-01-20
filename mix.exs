@@ -62,7 +62,8 @@ defmodule XDaysSober.MixProject do
       {:nicene, "~> 0.7.0", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.8", only: :dev},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:mjml_eex, "~> 0.9.0"}
     ]
   end
 
