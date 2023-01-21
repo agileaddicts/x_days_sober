@@ -1,7 +1,6 @@
 defmodule XDaysSoberWeb.HomeLive do
   use XDaysSoberWeb, :live_view
 
-  alias Timex.Timezone
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
   alias XDaysSoberWeb.PersonLive
@@ -14,7 +13,7 @@ defmodule XDaysSoberWeb.HomeLive do
 
   def handle_event("save", %{"person" => params}, socket) do
     validated_timezone =
-      if Timezone.exists?(params["timezone"]), do: params["timezone"], else: "Etc/UTC"
+      if Tzdata.canonical_zone?(params["timezone"]), do: params["timezone"], else: "Etc/UTC"
 
     case PersonRepo.create(params["email"], validated_timezone) do
       {:ok, person} ->

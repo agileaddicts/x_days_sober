@@ -47,7 +47,7 @@ config :x_days_sober, Oban,
     Oban.Plugins.Pruner,
     {Oban.Plugins.Cron,
      crontab: [
-       {"0 4 * * *", XDaysSober.EmailWorker}
+       {"0 * * * *", XDaysSober.EmailWorker}
      ]}
   ],
   queues: [default: 10]
