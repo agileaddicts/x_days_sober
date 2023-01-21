@@ -1,6 +1,8 @@
 defmodule XDaysSober.PersonRepo do
   @moduledoc false
 
+  import Ecto.Query
+
   alias Ecto.UUID
   alias Timex.Timezone
   alias XDaysSober.Person
@@ -45,6 +47,14 @@ defmodule XDaysSober.PersonRepo do
     Repo.get_by(Person, uuid: uuid)
   rescue
     Ecto.Query.CastError -> nil
+  end
+
+  def list_subscribed do
+    query =
+      from p in Person,
+        where: p.unsubscribed == false
+
+    Repo.all(query)
   end
 
   defp generate_today_date(timezone) do

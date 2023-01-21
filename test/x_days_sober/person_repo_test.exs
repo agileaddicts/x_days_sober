@@ -111,4 +111,22 @@ defmodule XDaysSober.PersonRepoTest do
       refute PersonRepo.get_by_uuid("wrong")
     end
   end
+
+  describe "list_subscribed/0" do
+    test "correct return with no persons" do
+      assert PersonRepo.list_subscribed() == []
+    end
+
+    test "correct return with subscribed persons" do
+      person_1 = insert!(:person)
+      insert!(:person)
+      person_3 = insert!(:person, unsubscribed: true)
+
+      subscribed_persons = PersonRepo.list_subscribed()
+
+      assert length(subscribed_persons) == 2
+      assert Enum.find(subscribed_persons, nil, fn p -> p.id == person_1.id end)
+      refute Enum.find(subscribed_persons, nil, fn p -> p.id == person_3.id end)
+    end
+  end
 end
