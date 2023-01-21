@@ -10,14 +10,12 @@
         <mj-text align="center" color="#102E4A" font-size="11px">Staying sober, one day at a time!</mj-text>
       </mj-column>
     </mj-section>
-    <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF">
-      <mj-column width="100%">
-        <mj-image width="58px" height="61px" align="left" src="<%= @logo_url %>" />
+    <mj-section padding="20px 0 0 0" background-color="#FFFFFF">
+      <mj-column width="87px" padding="0" vertical-align="middle">
+        <mj-image padding="0" width="58px" height="61px" align="left" src="<%= @logo_url %>" />
       </mj-column>
-    </mj-section>
-    <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF">
-      <mj-column>
-        <mj-text align="center" font-weight="600" font-size="32px" line-height="40px" color="#102E4A"><%= @subject %></mj-text>
+      <mj-column padding="0" vertical-align="middle">
+        <mj-text padding="0" font-weight="600" font-size="24px" line-height="40px" color="#102E4A" align="center"><%= @subject %></mj-text>
       </mj-column>
     </mj-section>
     <mj-section padding="10px 20px" background-color="#FFFFFF">
@@ -28,12 +26,15 @@
     <mj-section padding="20px" background-color="#FFFFFF">
       <mj-column>
         <mj-text align="center" font-weight="300" color="#102E4A">
-          Hey <%= @name %>,<br />
-          <br />
-          <%= @text_body_text %><br />
-          <br />
-          <a href="<%= @personal_affirmation_url %>" style="color: #102E4A; text-decoration: none;">Write an affirmation for others who are at the same point </a><br />
-          <br />
+          Hey <%= @name %>,
+        </mj-text>
+        <mj-text align="center" font-weight="300" color="#102E4A">
+          <%= @text_body_text %>
+        </mj-text>
+        <mj-button background-color="#102E4A" color="#FFF8F0" href="<%= @personal_affirmation_url %>">
+          Write an affirmation for others who are at the same point
+        </mj-button>
+        <mj-text align="center" font-weight="300" color="#102E4A">
           Until tomorrow,<br />
           Sebastian
         </mj-text>
