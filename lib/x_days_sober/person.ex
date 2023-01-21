@@ -4,7 +4,6 @@ defmodule XDaysSober.Person do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Timex.Timezone
   alias XDaysSober.Person
   alias XDaysSober.PersonalAffirmation
 
@@ -42,7 +41,7 @@ defmodule XDaysSober.Person do
   defp validate_timezone(changeset) do
     timezone = get_field(changeset, :timezone)
 
-    if timezone != nil && Timezone.exists?(timezone) do
+    if timezone != nil && Tzdata.canonical_zone?(timezone) do
       changeset
     else
       add_error(changeset, :timezone, "must be a valid timezone")
