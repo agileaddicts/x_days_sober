@@ -41,7 +41,7 @@ defmodule XDaysSober.DailyEmail do
   def generate(person, days) do
     name = person.name || person.email
 
-    subject_text = subject_text(days)
+    subject_text = subject_text(person, days)
     text_body_text = text_body_text(days)
 
     logo_url =
@@ -96,8 +96,18 @@ defmodule XDaysSober.DailyEmail do
     )
   end
 
-  defp subject_text(days) do
-    Map.get(@subjects, days, "#{days} days sober 🎉")
+  defp subject_text(person, days) do
+    month_different = Timex.diff(Timex.now(), person.sober_since, :month)
+
+    full_month? =
+      person.sober_since |> Timex.shift(months: month_different) |> Timex.to_date() ==
+        Timex.to_date(Timex.now())
+
+    if month_different > 0 && full_month? do
+      "#{month_different} month sober 💥"
+    else
+      Map.get(@subjects, days, "#{days} days sober 🎉")
+    end
   end
 
   defp text_body_text(days) do

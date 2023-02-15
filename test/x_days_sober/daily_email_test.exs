@@ -4,6 +4,7 @@ defmodule XDaysSober.DailyEmailTest do
   import XDaysSober.Factory
 
   alias XDaysSober.DailyEmail
+  alias XDaysSober.Person
 
   describe "generate/2" do
     test "correct email for person on day 1" do
@@ -37,6 +38,19 @@ defmodule XDaysSober.DailyEmailTest do
 
       assert email.text_body =~
                "Congratulations on one week of sobriety! You have already made a significant and positive change in your life, and should be proud of yourself for taking this important step. Remember that every day sober is a victory, and keep up the hard work. You are capable of living a fulfilling and healthy life without alcohol, and every day of sobriety brings you closer to achieving your goals. Keep going, and don't be afraid to reach out for support when you need it."
+    end
+
+    test "correct email for person on after one month" do
+      one_month_before = Timex.now() |> Timex.shift(months: -1) |> Timex.to_date()
+      person = build(:person, sober_since: one_month_before)
+
+      sober_days = Person.calculate_sober_days(person)
+      email = DailyEmail.generate(person, sober_days)
+
+      assert email.subject == "1 month sober 💥"
+
+      assert email.text_body =~
+               "you did it! You are #{sober_days} days sober! Keep up the hard work and dedication to your sobriety, you are making positive changes in your life and deserve to be proud of yourself."
     end
   end
 end
