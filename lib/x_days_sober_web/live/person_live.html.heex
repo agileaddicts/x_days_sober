@@ -72,7 +72,16 @@
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
             <dt class="text-sm font-medium text-prussian-blue/60">Sober since</dt>
             <dd class="mt-1 text-sm text-prussian-blue sm:col-span-2 sm:mt-0">
-              <%= @person.sober_since %> (<%= sober_days(@person) %>)
+              <%= if @edit_view do %>
+                <input
+                  type="date"
+                  class="block w-64 appearance-none rounded-lg border border-prussian-blue bg-floral-white p-2 text-prussian-blue sm:text-sm"
+                  name="sober_since"
+                  value={@person.sober_since}
+                />
+              <% else %>
+                <%= @person.sober_since %> (<%= sober_days(@person) %>)
+              <% end %>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">

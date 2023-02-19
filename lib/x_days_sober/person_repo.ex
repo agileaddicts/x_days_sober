@@ -19,11 +19,12 @@ defmodule XDaysSober.PersonRepo do
     |> Repo.insert()
   end
 
-  def update(person, name, timezone, unsubscribed) do
+  def update(person, name, timezone, sober_since, unsubscribed) do
     person
     |> Person.changeset(%{
       name: name,
       timezone: timezone,
+      sober_since: sober_since,
       unsubscribed: unsubscribed
     })
     |> Repo.update()
