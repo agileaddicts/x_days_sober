@@ -8,9 +8,10 @@ defmodule XDaysSober.DailyEmailTest do
 
   describe "generate/2" do
     test "correct email for person on day 1" do
-      person = build(:person)
+      person = build_person_with_days_sober(%{}, 1)
+      sober_days = Person.calculate_sober_days(person)
 
-      email = DailyEmail.generate(person, 1)
+      email = DailyEmail.generate(person, sober_days)
 
       assert email.subject == "One day sober 🎉"
 
@@ -19,9 +20,10 @@ defmodule XDaysSober.DailyEmailTest do
     end
 
     test "correct email for person on a normal day" do
-      person = build(:person)
+      person = build_person_with_days_sober(%{}, 3)
+      sober_days = Person.calculate_sober_days(person)
 
-      email = DailyEmail.generate(person, 3)
+      email = DailyEmail.generate(person, sober_days)
 
       assert email.subject == "3 days sober 🎉"
 
@@ -30,9 +32,10 @@ defmodule XDaysSober.DailyEmailTest do
     end
 
     test "correct email for person on day 7" do
-      person = build(:person)
+      person = build_person_with_days_sober(%{}, 7)
+      sober_days = Person.calculate_sober_days(person)
 
-      email = DailyEmail.generate(person, 7)
+      email = DailyEmail.generate(person, sober_days)
 
       assert email.subject == "One week sober 🎆"
 
@@ -43,14 +46,14 @@ defmodule XDaysSober.DailyEmailTest do
     test "correct email for person on after one month" do
       one_month_before = Timex.now() |> Timex.shift(months: -1) |> Timex.to_date()
       person = build(:person, sober_since: one_month_before)
-
       sober_days = Person.calculate_sober_days(person)
+
       email = DailyEmail.generate(person, sober_days)
 
-      assert email.subject == "1 month sober 💥"
+      assert email.subject == "One month sober 💥"
 
       assert email.text_body =~
-               "you did it! You are #{sober_days} days sober! Keep up the hard work and dedication to your sobriety, you are making positive changes in your life and deserve to be proud of yourself."
+               "you did it! You are #{sober_days.days} days sober! Keep up the hard work and dedication to your sobriety, you are making positive changes in your life and deserve to be proud of yourself."
     end
   end
 end

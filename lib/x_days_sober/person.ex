@@ -32,10 +32,12 @@ defmodule XDaysSober.Person do
   end
 
   def calculate_sober_days(%Person{} = person) do
-    person.timezone
-    |> Timex.now()
-    |> Timex.to_date()
-    |> Timex.diff(person.sober_since, :days)
+    %{
+      days: calculate_days(person),
+      weeks: calculate_weeks(person),
+      months: calculate_months(person),
+      years: calculate_years(person)
+    }
   end
 
   defp validate_timezone(changeset) do
@@ -45,6 +47,55 @@ defmodule XDaysSober.Person do
       changeset
     else
       add_error(changeset, :timezone, "must be a valid timezone")
+    end
+  end
+
+  defp calculate_days(person) do
+    person.timezone
+    |> Timex.now()
+    |> Timex.to_date()
+    |> Timex.diff(person.sober_since, :days)
+  end
+
+  defp calculate_weeks(person) do
+    week_different = Timex.diff(Timex.now(), person.sober_since, :week)
+
+    full_week? =
+      person.sober_since |> Timex.shift(weeks: week_different) |> Timex.to_date() ==
+        Timex.to_date(Timex.now())
+
+    if full_week? do
+      week_different
+    else
+      -1
+    end
+  end
+
+  defp calculate_months(person) do
+    month_different = Timex.diff(Timex.now(), person.sober_since, :month)
+
+    full_month? =
+      person.sober_since |> Timex.shift(months: month_different) |> Timex.to_date() ==
+        Timex.to_date(Timex.now())
+
+    if full_month? do
+      month_different
+    else
+      -1
+    end
+  end
+
+  defp calculate_years(person) do
+    year_different = Timex.diff(Timex.now(), person.sober_since, :year)
+
+    full_year? =
+      person.sober_since |> Timex.shift(years: year_different) |> Timex.to_date() ==
+        Timex.to_date(Timex.now())
+
+    if full_year? do
+      year_different
+    else
+      -1
     end
   end
 end

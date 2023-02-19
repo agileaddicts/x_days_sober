@@ -75,7 +75,9 @@ defmodule XDaysSoberWeb.PersonLive do
   defp maybe_unsubscribe(socket, _person, _params), do: socket
 
   defp sober_days(%Person{} = person) do
-    case Person.calculate_sober_days(person) do
+    sober_days = Person.calculate_sober_days(person)
+
+    case sober_days.days do
       1 -> "1 day"
       days -> "#{days} days"
     end
