@@ -36,7 +36,7 @@ defmodule XDaysSober.PersonalAffirmation do
     person = PersonRepo.get_by_id(person_id)
     sober_days = Person.calculate_sober_days(person)
 
-    if sober_days < day do
+    if sober_days.days < day do
       add_error(changeset, :day, "must be within your sober days")
     else
       changeset

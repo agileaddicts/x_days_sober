@@ -40,9 +40,16 @@ defmodule XDaysSoberWeb.PersonLive do
   def handle_event("save", params, socket) do
     new_name = Map.get(params, "name", "")
     new_timezone = Map.get(params, "timezone", "")
+    new_sober_since = Map.get(params, "sober_since", "")
     new_unsubscribed = Map.get(params, "unsubscribed", "1") == "1"
 
-    case PersonRepo.update(socket.assigns.person, new_name, new_timezone, new_unsubscribed) do
+    case PersonRepo.update(
+           socket.assigns.person,
+           new_name,
+           new_timezone,
+           new_sober_since,
+           new_unsubscribed
+         ) do
       {:ok, person} ->
         socket
         |> put_flash(:success, "Saved!")
@@ -75,7 +82,9 @@ defmodule XDaysSoberWeb.PersonLive do
   defp maybe_unsubscribe(socket, _person, _params), do: socket
 
   defp sober_days(%Person{} = person) do
-    case Person.calculate_sober_days(person) do
+    sober_days = Person.calculate_sober_days(person)
+
+    case sober_days.days do
       1 -> "1 day"
       days -> "#{days} days"
     end

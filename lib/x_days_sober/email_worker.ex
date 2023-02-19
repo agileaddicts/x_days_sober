@@ -23,8 +23,8 @@ defmodule XDaysSober.EmailWorker do
         |> Timex.format("%H", :strftime)
         |> then(fn {:ok, timezone_hour_string} -> String.to_integer(timezone_hour_string) end)
 
-      if !person.unsubscribed && sober_days > 0 && timezone_hour == 5 do
-        Logger.info("Sending email for person #{person.uuid} and day #{sober_days}")
+      if !person.unsubscribed && sober_days.days > 0 && timezone_hour == 5 do
+        Logger.info("Sending email for person #{person.uuid} and day #{sober_days.days}")
 
         person
         |> DailyEmail.generate(sober_days)

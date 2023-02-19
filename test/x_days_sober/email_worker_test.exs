@@ -26,7 +26,7 @@ defmodule XDaysSober.EmailWorkerTest do
       person = insert_person_with_days_sober(%{timezone: tz}, 1)
 
       assert perform_job(EmailWorker, %{}) == :ok
-      assert_email_sent(DailyEmail.generate(person, 1))
+      assert_email_sent(DailyEmail.generate(person, %{days: 1, weeks: -1, months: -1, years: -1}))
     end
 
     test "sending no email to person with timezone that is currently not 5" do
