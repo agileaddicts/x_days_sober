@@ -3,9 +3,6 @@ defmodule XDaysSoberWeb.PersonLive do
 
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.HomeLive
-  alias XDaysSoberWeb.PersonLive
-  alias XDaysSoberWeb.Router.Helpers
 
   def mount(params, _session, socket) do
     with uuid when is_binary(uuid) <- Map.get(params, "uuid"),
@@ -20,14 +17,7 @@ defmodule XDaysSoberWeb.PersonLive do
       |> ok()
     else
       _else ->
-        {:ok,
-         push_redirect(socket,
-           to:
-             Helpers.live_path(
-               socket,
-               HomeLive
-             )
-         )}
+        {:ok, push_redirect(socket, to: ~p"/")}
     end
   end
 
@@ -69,14 +59,7 @@ defmodule XDaysSoberWeb.PersonLive do
     socket
     |> assign(person: person)
     |> put_flash(:warning, "You won't receive any emails from us anymore!")
-    |> push_redirect(
-      to:
-        Helpers.live_path(
-          socket,
-          PersonLive,
-          person.uuid
-        )
-    )
+    |> push_redirect(to: ~p"/p/#{person.uuid}")
   end
 
   defp maybe_unsubscribe(socket, _person, _params), do: socket

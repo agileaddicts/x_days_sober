@@ -21,7 +21,7 @@ defmodule XDaysSoberWeb.Endpoint do
     at: "/",
     from: :x_days_sober,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: XDaysSoberWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

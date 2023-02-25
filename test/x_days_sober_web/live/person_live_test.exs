@@ -7,13 +7,11 @@ defmodule XDaysSoberWeb.PersonLiveTest do
 
   alias Ecto.UUID
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.PersonLive
-  alias XDaysSoberWeb.Router.Helpers
 
   test "user can access person detail page", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, _view, html} = live(conn, person_path(conn, person.uuid))
+    {:ok, _view, html} = live(conn, ~p"/p/#{person.uuid}")
 
     assert html =~ person.email
     assert html =~ "(0 days)"
@@ -22,7 +20,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "visitor is redirected when uuid does not exist", %{conn: conn} do
     {:ok, _view, html} =
       conn
-      |> live(person_path(conn, UUID.generate()))
+      |> live(~p"/p/#{UUID.generate()}")
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
@@ -31,7 +29,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "visitor is redirected when uuid is not a real uuid", %{conn: conn} do
     {:ok, _view, html} =
       conn
-      |> live(person_path(conn, "wrong"))
+      |> live(~p"/p/wrong")
       |> follow_redirect(conn)
 
     assert html =~ "X Days Sober"
@@ -41,7 +39,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
     person = insert!(:person)
 
     {:ok, _view, html} =
-      conn |> live(person_path(conn, person.uuid, unsubscribe: 1)) |> follow_redirect(conn)
+      conn |> live(~p"/p/#{person.uuid}?unsubscribe=1") |> follow_redirect(conn)
 
     assert html =~ "You won&#39;t receive any emails from us anymore!"
 
@@ -53,7 +51,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can see correct indication of 1 day sober", %{conn: conn} do
     person = insert_person_with_days_sober(%{}, 1)
 
-    {:ok, _view, html} = live(conn, person_path(conn, person.uuid))
+    {:ok, _view, html} = live(conn, ~p"/p/#{person.uuid}")
 
     assert html =~ person.email
     assert html =~ "(1 day)"
@@ -62,7 +60,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can edit and save with same values", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+    {:ok, view, _html} = live(conn, ~p"/p/#{person.uuid}")
 
     view
     |> element("button", "Edit")
@@ -83,7 +81,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can edit and save with new name", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+    {:ok, view, _html} = live(conn, ~p"/p/#{person.uuid}")
 
     view
     |> element("button", "Edit")
@@ -102,7 +100,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can remove his name", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+    {:ok, view, _html} = live(conn, ~p"/p/#{person.uuid}")
 
     view
     |> element("button", "Edit")
@@ -120,7 +118,7 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   test "user can edit and save with new timezone", %{conn: conn} do
     person = insert!(:person)
 
-    {:ok, view, _html} = live(conn, person_path(conn, person.uuid))
+    {:ok, view, _html} = live(conn, ~p"/p/#{person.uuid}")
 
     view
     |> element("button", "Edit")
@@ -139,14 +137,5 @@ defmodule XDaysSoberWeb.PersonLiveTest do
   # Has to be implemented
   @tag :skip
   test "user gets error if sending invalid timezone" do
-  end
-
-  defp person_path(conn, uuid, params \\ []) do
-    Helpers.live_path(
-      conn,
-      PersonLive,
-      uuid,
-      params
-    )
   end
 end

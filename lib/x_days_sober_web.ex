@@ -18,6 +18,8 @@ defmodule XDaysSoberWeb do
   and import those modules here.
   """
 
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: XDaysSoberWeb
@@ -25,6 +27,8 @@ defmodule XDaysSoberWeb do
       import Plug.Conn
       import XDaysSoberWeb.Gettext
       alias XDaysSoberWeb.Router.Helpers, as: Routes
+
+      unquote(verified_routes())
     end
   end
 
@@ -100,6 +104,17 @@ defmodule XDaysSoberWeb do
       import XDaysSoberWeb.Helpers
       import XDaysSoberWeb.Gettext
       alias XDaysSoberWeb.Router.Helpers, as: Routes
+
+      unquote(verified_routes())
+    end
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: XDaysSoberWeb.Endpoint,
+        router: XDaysSoberWeb.Router,
+        statics: XDaysSoberWeb.static_paths()
     end
   end
 

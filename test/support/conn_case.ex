@@ -31,6 +31,8 @@ defmodule XDaysSoberWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint XDaysSoberWeb.Endpoint
+
+      use XDaysSoberWeb, :verified_routes
     end
   end
 

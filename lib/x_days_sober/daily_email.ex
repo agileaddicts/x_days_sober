@@ -1,13 +1,11 @@
 defmodule XDaysSober.DailyEmail do
   @moduledoc false
 
+  use XDaysSoberWeb, :verified_routes
+
   import Swoosh.Email
 
   alias XDaysSober.DailyEmailTemplate
-  alias XDaysSoberWeb.Endpoint
-  alias XDaysSoberWeb.PersonalAffirmationLive
-  alias XDaysSoberWeb.PersonLive
-  alias XDaysSoberWeb.Router.Helpers
 
   require Logger
 
@@ -51,36 +49,13 @@ defmodule XDaysSober.DailyEmail do
     subject_text = subject_text(sober_days)
     text_body_text = text_body_text(sober_days)
 
-    logo_url =
-      Endpoint
-      |> Helpers.static_path("/images/logo.png")
-      |> build_url()
+    logo_url = url(~p"/images/logo.png")
 
-    personal_affirmation_url =
-      Endpoint
-      |> Helpers.live_path(
-        PersonalAffirmationLive,
-        person.uuid,
-        sober_days.days
-      )
-      |> build_url()
+    personal_affirmation_url = url(~p"/pa/#{person.uuid}/#{sober_days.days}")
 
-    person_detail_url =
-      Endpoint
-      |> Helpers.live_path(
-        PersonLive,
-        person.uuid
-      )
-      |> build_url()
+    person_detail_url = url(~p"/p/#{person.uuid}")
 
-    person_unsubscribe_url =
-      Endpoint
-      |> Helpers.live_path(
-        PersonLive,
-        person.uuid,
-        unsubscribe: 1
-      )
-      |> build_url()
+    person_unsubscribe_url = url(~p"/p/#{person.uuid}?unsubscribe=1")
 
     html =
       DailyEmailTemplate.render(
@@ -149,10 +124,5 @@ defmodule XDaysSober.DailyEmail do
       days,
       "you did it! You are #{days} days sober! Keep up the hard work and dedication to your sobriety, you are making positive changes in your life and deserve to be proud of yourself."
     )
-  end
-
-  defp build_url(path) do
-    base_url = Application.fetch_env!(:x_days_sober, :base_url)
-    base_url <> path
   end
 end

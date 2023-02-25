@@ -5,9 +5,6 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
   alias XDaysSober.PersonalAffirmation
   alias XDaysSober.PersonalAffirmationRepo
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.HomeLive
-  alias XDaysSoberWeb.PersonLive
-  alias XDaysSoberWeb.Router.Helpers
 
   def mount(params, _session, socket) do
     with %Person{} = person <- get_person_from_params(params),
@@ -20,26 +17,13 @@ defmodule XDaysSoberWeb.PersonalAffirmationLive do
 
         _else ->
           socket
-          |> push_redirect(
-            to:
-              Helpers.live_path(
-                socket,
-                PersonLive,
-                person.uuid
-              )
-          )
+          |> push_redirect(to: ~p"/p/#{person.uuid}")
           |> ok()
       end
     else
       _else ->
         socket
-        |> push_redirect(
-          to:
-            Helpers.live_path(
-              socket,
-              HomeLive
-            )
-        )
+        |> push_redirect(to: ~p"/")
         |> ok()
     end
   end

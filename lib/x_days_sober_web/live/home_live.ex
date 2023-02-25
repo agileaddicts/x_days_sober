@@ -3,8 +3,6 @@ defmodule XDaysSoberWeb.HomeLive do
 
   alias XDaysSober.Person
   alias XDaysSober.PersonRepo
-  alias XDaysSoberWeb.PersonLive
-  alias XDaysSoberWeb.Router.Helpers
 
   def mount(_params, _session, socket) do
     socket = assign(socket, changeset: Person.changeset(%Person{}, %{}))
@@ -21,12 +19,7 @@ defmodule XDaysSoberWeb.HomeLive do
 
         {:noreply,
          push_redirect(socket,
-           to:
-             Helpers.live_path(
-               socket,
-               PersonLive,
-               person.uuid
-             )
+           to: ~p"/p/#{person.uuid}"
          )}
 
       {:error, changeset} ->
